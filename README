@@ -1,1 +1,5 @@
-nothing to see here...
+CMU-SV Spring 2011 Practicum
+DTN Vehicular Gateway Prototype
+--------
+*dtn-2.7.0 + oasys-1.4.0 source as of Jan 2011 
+*Compiled on Ubuntu with Linux kernel 2.6.35-24
