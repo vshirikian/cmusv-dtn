@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+		<TextView android:id="@+id/TextView01" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Policy IN">
+		</TextView>
+
+		<CheckBox android:text="BAB IN" android:id="@+id/checkbox_useBAB_IN"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</CheckBox>
+	
+		<CheckBox android:text="CB IN" android:id="@+id/checkbox_useCB_IN"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</CheckBox>
+	
+		<CheckBox android:text="PSB IN" android:id="@+id/checkbox_usePSB_IN"
+			android:layout_width="fill_parent" android:layout_height="wrap_content">
+		</CheckBox>
+	
+	
+		<TextView android:id="@+id/TextView02" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="Policy OUT">
+		</TextView>
+	
+	
+		<CheckBox android:text="BAB OUT" android:id="@+id/checkbox_useBAB_OUT"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+		</CheckBox>
+	
+		<CheckBox android:text="CB OUT" android:id="@+id/checkbox_useCB_OUT"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+		</CheckBox>
+	
+		<CheckBox android:text="PSB OUT" android:id="@+id/checkbox_usePSB_OUT"
+			android:layout_width="wrap_content" android:layout_height="wrap_content">
+		</CheckBox>
+	
+	<LinearLayout
+		    android:orientation="horizontal"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content">
+		    
+		<Button android:id="@+id/okButton"
+	      android:layout_width="wrap_content" 
+	      android:layout_height="wrap_content" 
+	      android:text="Save Changes"
+    	/>
+    	
+    	
+    
+	    	<Button 
+		      android:id="@+id/cancelButton"
+		      android:layout_width="wrap_content" 
+		      android:layout_height="wrap_content" 
+		      android:text="Cancel"
+	  		/>
+</LinearLayout> </LinearLayout>
