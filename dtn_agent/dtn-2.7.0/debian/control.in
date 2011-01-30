@@ -1,0 +1,15 @@
+Package: dtnd
+Version: %MAJOR%.%MINOR%-%PATCH%
+Section: net
+Priority: optional
+Architecture: i386
+Essential: no
+Depends: tcl8.4 tclx8.4-dev tcllib libxerces-c2-dev libdb4.7, tcl8.4 
+Recommends: tclreadline
+Installed-Size: 2048
+Maintainer: dtn-users [dtn-users@mailman.dtnrg.org]
+Provides: dtnd
+Description: Delay Tolerant Networking reference implementation.
+	     This package includes the Delay Tolerant Networking (DTN)
+	     daemon (dtnd) as well as several example applications
+	     that use the DTN protocols.

@@ -1,0 +1,96 @@
+checking location of source directory... "/home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0"
+checking location of build directory... "/home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0"
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for an oasys installation (version 1.3 or better)... ../oasys
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking whether bonjour support should be enabled... try
+checking searching for the bonjour library development headers... checking dns_sd.h usability... yes
+checking dns_sd.h presence... yes
+checking for dns_sd.h... yes
+checking for library containing DNSServiceRegister... -ldns_sd
+checking whether bonjour support was found... yes
+checking whether to enable external convergence layer support... yes
+checking whether oasys is configured with XERCES_C_ENABLED... yes
+checking whether to enable external decision plane support... yes
+checking whether oasys is configured with XERCES_C_ENABLED... yes (cached)
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking whether to enable NORM convergence layer support... no
+checking whether to enable LTP convergence layer support... no
+checking how to run the C++ preprocessor... g++ -E
+checking for a C compiler (trying gcc)... 
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking for gcc option to accept ISO C89... (cached) none needed
+checking for a C++ compiler (trying g++)... 
+checking whether we are using the GNU C++ compiler... (cached) yes
+checking whether g++ accepts -g... (cached) yes
+checking whether the C++ compiler works... yes
+checking how to run the C preprocessor... gcc -E
+checking for the version of the GNU C compiler... 4.4
+checking for the version of the GNU C++ compiler... 4.4
+checking for ar... ar
+checking for ranlib... ranlib
+checking whether to compile with debugging... yes
+checking whether to compile with memory debugging... no
+checking whether to compile with lock debugging (default yes)... yes
+checking whether to compile with optimization... no
+checking whether to compile with profiling... no
+checking whether to link statically... no
+checking whether to link using static external libraries... no
+checking whether to try to build shared libraries... yes
+checking whether the compiler supports -fPIC... yes
+checking whether the compiler can link a dynamic library with -shared... yes
+checking extension for dynamic libraries... so
+checking if the compiler supports -Wl,--rpath=.... yes
+configure: creating ./config.status
+config.status: creating Rules.make
+config.status: creating System.make
+config.status: creating dtn-config.h
+Build options:
+  TARGET is: native
+  CC: gcc
+  CXX: g++
+ 
+Options:
+  DEBUG: -g -fno-inline
+  OPTIMIZE: 
+  PICFLAGS: -fPIC -DPIC
+  PROFILE: 
+  DEFS: -DHAVE_CONFIG_H
+  SYS_CFLAGS: -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+  INCFLAGS: -I. -I. -I/home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0/oasys/include -I/home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0/oasys/include/oasys/ext -I./servlib
+  EXTRA_CFLAGS: 
+  LDFLAGS: -L. 
+ 
+
+Oasys Configuration:
+  OASYS_INCDIR: /home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0/oasys/include
+  OASYS_LIBDIR: /home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0/oasys/lib
+  OASYS_ETCDIR: /home/vache/Desktop/cmusv-dtn/dtn_agent/dtn-2.7.0/oasys/share
+  OASYS_VERSION: 1.4.0
+
+External Packages:
+  EXTLIB_CFLAGS: -I/usr/include/tcl8.5 -I/usr/local/include
+  EXTLIB_LDFLAGS: -ldns_sd  -ldl -lm  -ltcl8.5 -L/usr/local/lib -Wl,-Bstatic -lprofiler -Wl,-Bdynamic -lexpat -lxerces-c -lreadline  -lz  -ldb-4.8 -lpthread 

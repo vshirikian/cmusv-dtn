@@ -1,0 +1,33 @@
+Source: dtn
+Section: net
+Priority: optional
+Maintainer: dtn-users mailing list [dtn-users@mailman.dtnrg.org]
+Build-Depends: liboasys-dev, python2.4-dev | python2.5-dev | python2.6-dev | python3.0-dev
+
+
+Package: dtn
+Architecture: any
+Suggests: tclreadline
+Depends: ${shlibs:Depends}
+Provides: dtn
+Description: Delay Tolerant Networking reference implementation
+ .
+ This package contains the reference implementation of the Delay
+ Tolerant Networking (DTN) architecture. This includes the DTN daemon
+ (dtnd) as well as several example applications that use the DTN
+ protocols. 
+ . 
+ Homepage: http://www.dtnrg.org
+
+
+Package: python-dtn
+Depends: dtn
+Provides: ${python:Provides}
+Architecture: all
+Description: DTN python api
+ .
+ This package contains python bindings for applications to use the DTN
+ reference implementation.
+ . 
+ Homepage: http://www.dtnrg.org
+

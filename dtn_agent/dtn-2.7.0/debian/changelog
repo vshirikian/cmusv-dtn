@@ -1,0 +1,35 @@
+dtn (2.6.0) unstable; urgency=low
+
+  * 2.6.0 release upgrade
+
+ -- Alex McMahon <ailex.mcmahon@cs.tcd.ie>  Fri, 08 May 2009 20:07:09 +0100
+
+dtn (2.5.1-1) unstable; urgency=low
+
+  * 2.5.1 release update
+
+ -- Michael Demmer <demmer@cs.berkeley.edu>  Wed,  5 Mar 2008 15:31:47 -0800
+
+dtn (2.5.0-1) unstable; urgency=low
+
+  * 2.5.0 release update
+
+ -- Michael Demmer <demmer@cs.berkeley.edu>  Fri, 19 Oct 2007 11:52:23 -0700
+
+dtn (2.4.0-1) unstable; urgency=low
+
+  * Updated version of the package
+
+ -- Michael Demmer <demmer@cs.berkeley.edu>  Wed, 11 Jul 2007 00:39:03 -0700
+
+dtn (2.3.0-1) unstable; urgency=low
+
+  * Updated version of the package
+
+ -- Michael Demmer <demmer@cs.berkeley.edu>  Mon, 18 Dec 2006 13:00:31 -0800
+
+dtn (2.2.0-1) unstable; urgency=low
+
+  * Initial version of a debian package
+
+ -- Michael Demmer <demmer@cs.berkeley.edu>  Tue, 14 Mar 2006 15:02:24 -0800

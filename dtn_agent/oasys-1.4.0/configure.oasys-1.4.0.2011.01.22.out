@@ -1,0 +1,171 @@
+checking location of source directory... "/home/vache/Desktop/dtn_agent/oasys"
+checking location of build directory... "/home/vache/Desktop/dtn_agent/oasys"
+checking for --with-python... no
+checking for python... /usr/bin/python
+checking whether python distutils can build an extension module... yes
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for library containing pow... -lm
+checking for library containing dlopen... -ldl
+
+configure: checking for tcl installation (version 8.5)
+checking for tcl.h (version 8.5) in /usr/include... no
+checking for tcl.h (version 8.5) in /usr/local/include... no
+checking for tcl.h (version 8.5) in /usr/include/tcl8.5... yes
+checking for tcl library in /usr/lib: -ltcl8.5 ... yes
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking whether to compile with google profiling... yes
+checking for google perftools header profiler.h in /usr/local/include... yes
+checking for google perftolos library libprofiler in /usr/local/lib... yes
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking whether bluetooth support should be enabled... try
+checking for library containing baswap... no
+checking bluetooth/bluetooth.h usability... no
+checking bluetooth/bluetooth.h presence... no
+checking for bluetooth/bluetooth.h... no
+checking whether bluetooth support was found... no
+checking whether expat support should be enabled... try
+checking for expat in /usr/include, /usr/lib, -lexpat... yes
+checking whether libexpat was found... yes
+checking whether xerces-c support should be enabled... try
+checking whether xerces-c (>= v2.6.0) was found... yes
+checking how to run the C++ preprocessor... g++ -E
+checking whether tclreadline support should be enabled... try
+checking searching for the readline library development headers... checking readline/readline.h usability... yes
+checking readline/readline.h presence... yes
+checking for readline/readline.h... yes
+checking for library containing readline... -lreadline
+checking whether readline is GNU readline or BSD editline... editline
+checking whether tclreadline support was found... yes
+checking whether zlib support should be enabled... yes
+checking for library containing compress... -lz
+checking for library containing compressBound... none required
+checking whether zlib support was found... yes
+checking for xmllint... xmllint
+checking for Berkeley DB header (version 4.8) in /usr/include... yes
+checking for Berkeley DB library in /usr/lib, -ldb-4.8... yes
+checking for a C compiler (trying gcc)... 
+checking whether we are using the GNU C compiler... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking for gcc option to accept ISO C89... (cached) none needed
+checking for a C++ compiler (trying g++)... 
+checking whether we are using the GNU C++ compiler... (cached) yes
+checking whether g++ accepts -g... (cached) yes
+checking whether the C++ compiler works... yes
+checking how to run the C preprocessor... gcc -E
+checking for the version of the GNU C compiler... 4.4
+checking for the version of the GNU C++ compiler... 4.4
+checking for ar... ar
+checking for ranlib... ranlib
+checking whether to compile with debugging... yes
+checking whether to compile with memory debugging... no
+checking whether to compile with lock debugging (default yes)... yes
+checking whether to compile with optimization... no
+checking whether to compile with profiling... no
+checking whether to link statically... no
+checking whether to link using static external libraries... no
+checking whether to try to build shared libraries... yes
+checking whether the compiler supports -fPIC... yes
+checking whether the compiler can link a dynamic library with -shared... yes
+checking extension for dynamic libraries... so
+checking if the compiler supports -Wl,--rpath=.... yes
+checking for a BSD-compatible install... /usr/bin/install -c
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for ranlib... (cached) ranlib
+checking for library containing pthread_create... -lpthread
+checking for library containing pthread_yield... none required
+checking for library containing sched_yield... none required
+checking for library containing pthread_setspecific... none required
+checking for library containing socket... none required
+checking for library containing gethostbyname... none required
+checking for library containing gethostbyname_r... none required
+checking for library containing xdr_int... none required
+checking for library containing xdr_u_int64_t... no
+checking for library containing xdr_u_quad_t... none required
+checking for library containing inet_aton... none required
+checking for library containing inet_pton... none required
+checking for ANSI C header files... (cached) yes
+checking err.h usability... yes
+checking err.h presence... yes
+checking for err.h... yes
+checking execinfo.h usability... yes
+checking execinfo.h presence... yes
+checking for execinfo.h... yes
+checking for stdint.h... (cached) yes
+checking for string.h... (cached) yes
+checking synch.h usability... no
+checking synch.h presence... no
+checking for synch.h... no
+checking sys/cdefs.h usability... yes
+checking sys/cdefs.h presence... yes
+checking for sys/cdefs.h... yes
+checking for sys/types.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for working volatile... yes
+checking for mode_t... yes
+checking value for _FILE_OFFSET_BITS preprocessor symbol... 64
+checking size of off_t... 8
+checking return type of signal handlers... void
+checking for size_t... yes
+checking for ptrdiff_t... yes
+checking for uint32_t... yes
+checking for u_int32_t... yes
+checking for getaddrinfo... yes
+checking for getopt_long... yes
+checking for cfmakeraw... yes
+checking for cfsetspeed... yes
+checking whether to compile with non-atomic "atomic" routines... no
+checking whether to compile with assembly-based atomic functions... yes
+configure: creating ./config.status
+config.status: creating Rules.make
+config.status: creating System.make
+config.status: creating oasys-config.h
+Build options:
+  TARGET is: native
+  CC: gcc
+  CXX: g++
+ 
+Options:
+  DEBUG: -g -fno-inline
+  OPTIMIZE: 
+  PICFLAGS: -fPIC -DPIC
+  PROFILE: 
+  DEFS: -DHAVE_CONFIG_H
+  SYS_CFLAGS: -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
+  INCFLAGS: -I. -I. -I/home/vache/Desktop/dtn_agent/oasys -I./ext
+  EXTRA_CFLAGS: 
+  LDFLAGS: -L. 
+ 
+
+Oasys Configuration:
+  OASYS_INCDIR: /home/vache/Desktop/dtn_agent/oasys
+  OASYS_LIBDIR: /home/vache/Desktop/dtn_agent/oasys/lib
+  OASYS_ETCDIR: /home/vache/Desktop/dtn_agent/oasys
+  OASYS_VERSION: 1.4.0
+
+External Packages:
+  EXTLIB_CFLAGS: -I/usr/include/tcl8.5 -I/usr/local/include
+  EXTLIB_LDFLAGS: -ldl -lm  -ltcl8.5 -L/usr/local/lib -Wl,-Bstatic -lprofiler -Wl,-Bdynamic -lexpat -lxerces-c -lreadline  -lz  -ldb-4.8 -lpthread 
