@@ -1,5 +1,6 @@
 CMU-SV Spring 2011 Practicum
 DTN Vehicular Gateway Prototype
 --------
-*dtn_agent -> dtn-2.7.0 + oasys-1.4.0 source and binaries as of Jan 2011, compiled on Ubuntu with Linux kernel 2.6.35-25
+*dtn_agent -> dtn-2.7.0 + oasys-1.4.0 source and binaries as of Jan 2011;
+ compiled on Ubuntu with Linux kernel 2.6.35-25
 *Android_Bytewalla_II -> bytewalla source and binaries for Android
