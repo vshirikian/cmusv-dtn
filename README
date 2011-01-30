@@ -5,7 +5,7 @@ DTN Vehicular Gateway Prototype
 *Android_Bytewalla_II/ -> source and binaries for bytewalla Android dtn implementation as of Jan 2011
 
 # how-to compile dtnd on ubuntu #
-1. apt-get update && apt-get install tcl-dev build-essential zlib1g-dev libdb-dev libreadline-dev tclreadline libxerces-c2-dev libexpat1-dev libgoogle-perftools-dev 
+1. sudo apt-get update && sudo apt-get upgrade && sudo apt-get install tcl-dev build-essential zlib1g-dev libdb-dev libreadline-dev tclreadline libxerces-c2-dev libexpat1-dev libgoogle-perftools-dev 
 2. 'oasys-1.4.0/configure --with-google-perftools --enable-google-profiling --with-xsd-tool=xmllint --with-dbver=4.8 --with-zlib && make'
 3. 'dtn-2.7.0/configure'
 4. create symbolic link or rename 'oasys-1.4.0' to 'oasys'
