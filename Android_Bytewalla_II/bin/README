@@ -1,1 +1,2 @@
-Directory for Android SDK to generate APK, etc
+Directory for Android SDK generated files.
+No files should be checked into this directory.

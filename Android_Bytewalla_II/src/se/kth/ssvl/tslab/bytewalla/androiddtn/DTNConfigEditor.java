@@ -20,10 +20,7 @@
 package se.kth.ssvl.tslab.bytewalla.androiddtn;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -107,7 +104,6 @@ public class DTNConfigEditor extends Activity {
 		saveButton.setEnabled(false);
 		saveButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				
 				
@@ -147,7 +143,6 @@ public class DTNConfigEditor extends Activity {
 		
 		closeButton.setOnClickListener(new OnClickListener(){
 
-			@Override
 			public void onClick(View v) {
 				if (is_config_not_saved_)
 				{
@@ -155,7 +150,6 @@ public class DTNConfigEditor extends Activity {
 				      .setMessage("The configuration is not saved. Your change will be lost. Proceed?")
 				      .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 						
-						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							
 							self_.finish();
@@ -224,18 +218,15 @@ public class DTNConfigEditor extends Activity {
 		// Add TextChange event handler to enable the save button only when there is a change in the configuration file 
 		configEditText.addTextChangedListener(new TextWatcher() {
 			
-			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				saveButton.setEnabled(true);
 				is_config_not_saved_ = true;
 			}
 			
-			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 				}
 			
-			@Override
 			public void afterTextChanged(Editable s) {
 				
 			}

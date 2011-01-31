@@ -19,11 +19,7 @@
  */
 package se.kth.ssvl.tslab.bytewalla.androiddtn.apps;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
-
-import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.R;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPIBinder;
@@ -46,16 +42,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * The DTNSend Activity. This Activity allows user to send Text message from DTN
@@ -199,7 +192,6 @@ public class DTNSend extends Activity
 			SendButton.setOnClickListener(new OnClickListener() {
 			
 				
-				@Override
 				public void onClick(View v) {
 					try {
 						// Validate the user input first whether the EID is valid EID
@@ -238,7 +230,7 @@ public class DTNSend extends Activity
 			closeButton = (Button)this.findViewById(R.id.DTNApps_DTNSend_CloseButton);
 			closeButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
+
 				public void onClick(View v) {
 					   //Toast.makeText(DTNManager.me, "hola", Toast.LENGTH_SHORT).show();  
 					savePreferences();
@@ -290,14 +282,14 @@ public class DTNSend extends Activity
 
 			
 
-			@Override
+
 			public void onServiceConnected(ComponentName arg0, IBinder ibinder) {
 				Log.i(TAG, "DTN Service is bound");
 				dtn_api_binder_ = (DTNAPIBinder) ibinder;
 			}
 
 
-			@Override
+
 			public void onServiceDisconnected(ComponentName arg0) {
 				Log.i(TAG, "DTN Service is Unbound");
 				dtn_api_binder_ = null;

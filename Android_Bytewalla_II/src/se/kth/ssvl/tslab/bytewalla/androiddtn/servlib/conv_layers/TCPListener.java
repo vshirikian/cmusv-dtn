@@ -109,10 +109,6 @@ public class TCPListener extends CLInfo implements Runnable {
 
 	private boolean listening_ = false; // / Listening flag
 
-	@Override
-	/**
-	 * Main loop
-	 */
 	public void run() {
 
 		while (listening_) {

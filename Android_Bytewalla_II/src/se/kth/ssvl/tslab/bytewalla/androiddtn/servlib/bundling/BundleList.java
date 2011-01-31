@@ -221,7 +221,6 @@ public class BundleList implements Serializable {
 		}
 
 		// End Singleton Implementation of the SORT_FRAG_OFFSET
-		@Override
 		public int compare(Bundle arg0, Bundle arg1) {
 			if (arg0.frag_offset() < arg1.frag_offset())
 				return -1;
@@ -269,7 +268,6 @@ public class BundleList implements Serializable {
 		}
 
 		// End Singleton Implementation of the SORT_PRIORITY
-		@Override
 		public int compare(Bundle arg0, Bundle arg1) {
 			if (arg0.priority().getCode() < arg1.priority().getCode())
 				return 1;

@@ -19,20 +19,11 @@
  */
 package se.kth.ssvl.tslab.bytewalla.androiddtn.apps;
 
-import ext.org.bouncycastle.crypto.engines.AESEngine;
-import ext.org.bouncycastle.crypto.modes.GCMBlockCipher;
-import ext.org.bouncycastle.crypto.params.AEADParameters;
-import ext.org.bouncycastle.crypto.params.KeyParameter;
-
 import se.kth.ssvl.tslab.bytewalla.androiddtn.R;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD.spd_policy_t;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -93,7 +84,7 @@ public class DTNApps extends Activity
 			
 			CloseButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
+
 				public void onClick(View v) {
 					DTNApps.this.finish();
 					
@@ -102,7 +93,7 @@ public class DTNApps extends Activity
 		
 			DTNSendOpenButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
+
 				public void onClick(View v) {
 					Intent i = new Intent(DTNApps.this, DTNSend.class);
 					startActivity(i);
@@ -113,7 +104,7 @@ public class DTNApps extends Activity
 			
 			DTNReceiveOpenButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
+
 				public void onClick(View v) {
 					Intent i = new Intent(DTNApps.this, DTNReceive.class);
 					startActivity(i);

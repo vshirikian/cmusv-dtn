@@ -5,7 +5,6 @@ package se.kth.ssvl.tslab.bytewalla.androiddtn;
 
 
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD.spd_policy_t;
 import android.app.Activity;
 
 
@@ -35,11 +34,6 @@ public class DTNSetSecurityPolicy extends Activity
 	CheckBox checkbox_usePSB_OUT;
 	
 	
-	/**
-	 * CloseButton reference object
-	 */
-	private Button CloseButton;
-
 	public static final String USER_PREFERENCE = "USER_PREFERENCES";
 	
 	public static final String IN_POLICY = "IN_POLICY";

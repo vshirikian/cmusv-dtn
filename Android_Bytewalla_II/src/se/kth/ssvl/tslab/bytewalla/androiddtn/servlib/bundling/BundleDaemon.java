@@ -29,9 +29,7 @@ import java.util.ListIterator;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.R;
@@ -312,7 +310,6 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 			}
 			return instance_;
 		}
-		@Override
 		public int compare(BundleEvent event1, BundleEvent event2) {
 
 			// according the PriorityQueue the lower the output value the closer to the top of the queue

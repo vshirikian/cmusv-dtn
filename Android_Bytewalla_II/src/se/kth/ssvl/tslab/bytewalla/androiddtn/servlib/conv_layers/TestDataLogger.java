@@ -182,7 +182,6 @@ public class TestDataLogger {
 		
 		battery_observer_ = new BatteryObserver() {
 			
-			@Override
 			public void update_battery_stat(BatteryStat btStat) {
 				if (DTNService.is_test_data_logging())
 				log_battery_change(btStat);

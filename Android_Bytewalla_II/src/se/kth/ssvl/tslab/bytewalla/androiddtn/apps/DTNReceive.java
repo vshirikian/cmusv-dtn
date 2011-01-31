@@ -163,7 +163,7 @@ public static final String USER_PREFERENCE = "USER_PREFERENCES";
 		
 		closeButton.setOnClickListener(new OnClickListener() {
 
-			@Override
+
 			public void onClick(View v) {
 				savePreferences();
 				DTNReceive.this.finish();
@@ -174,7 +174,7 @@ public static final String USER_PREFERENCE = "USER_PREFERENCES";
 		
 		receiveButton.setOnClickListener(new OnClickListener() {
 
-			@Override
+
 			public void onClick(View v) {
 				try {
 					int received_count = receive_messages();
@@ -225,13 +225,13 @@ public static final String USER_PREFERENCE = "USER_PREFERENCES";
 
 		conn_ = new ServiceConnection() {
 
-			@Override
+
 			public void onServiceConnected(ComponentName arg0, IBinder ibinder) {
 				Log.i(TAG, "DTN Service is bound");
 				dtn_api_binder_ = (DTNAPIBinder) ibinder;
 			}
 
-			@Override
+
 			public void onServiceDisconnected(ComponentName arg0) {
 				Log.i(TAG, "DTN Service is Unbound");
 				dtn_api_binder_ = null;

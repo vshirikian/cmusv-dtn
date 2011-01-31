@@ -85,12 +85,6 @@ public class StorageIterator<Type> implements Iterator<Integer>{
     	id = -1;
     }
 
-	@Override
-	
-	/**
-	 * Check if iterator has next object
-	 * @return If next object exist then return true else fasle.
-	 */
 	public boolean hasNext() {
 		if(id==-1){
 	    	String limit = "1";   		
@@ -121,12 +115,6 @@ public class StorageIterator<Type> implements Iterator<Integer>{
 	    	}
 		}
 	}
-	@Override
-	
-	/**
-	 * Get the next object of the iterator
-	 * @return Return the id of the next object
-	 */
 	public Integer next() {
 		if(id==-1){
 	    	String limit = "1";   		
@@ -160,7 +148,6 @@ public class StorageIterator<Type> implements Iterator<Integer>{
 		}
 	}
 
-	@Override
 	public void remove() {
 		// TODO Auto-generated method stub
 		

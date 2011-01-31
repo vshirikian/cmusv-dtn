@@ -356,27 +356,14 @@ public class BundleStore  {
 		{
 	    	itr_ = new StorageIterator<Integer>(impt_sqlite, table, pre_condition, post_condition, first_condition);
 		}
-		@Override
-
-        /**
-         * Check if iterator has more objects.
-         * @return True if there is more else false  
-         */        
 		public boolean hasNext() {
 			return itr_.hasNext();
 		}
-
-		@Override
-        /**
-         * Return the next Bundle
-         * @return Next Bundle in the iterator  
-         */        
 
 		public Bundle next() {
 			return instance_.get(itr_.next());
 		}
 
-		@Override
 		public void remove() {
 			// TODO Auto-generated method stub
 			

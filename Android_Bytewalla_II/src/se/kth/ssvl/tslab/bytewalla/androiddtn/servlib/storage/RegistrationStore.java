@@ -377,28 +377,14 @@ public class RegistrationStore{
 		{
 	    	itr_ = new StorageIterator<Registration>(impt_sqlite, table, pre_condition, post_condition, first_condition);
 		}
-		@Override
-		
-        /**
-         * Check if iterator has more objects.
-         * @return True if there is more else false  
-         */        
-		
 		public boolean hasNext() {
 			return itr_.hasNext();
 		}
-
-		@Override
-        /**
-         * Return the next Registration
-         * @return Next Registration in the iterator  
-         */        
 
 		public Registration next() {
 			return instance_.get(itr_.next());
 		}
 
-		@Override
 		public void remove() {
 			// TODO Auto-generated method stub
 			

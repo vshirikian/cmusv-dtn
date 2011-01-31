@@ -33,7 +33,6 @@ public class RouteEntryComparator implements Comparator<RouteEntry>{
 	/**
 	 * compare function override from Java Comparator
 	 */
-	@Override
 	public int compare(RouteEntry r1, RouteEntry r2) {
 		
 		if ( r1.priority() < r2.priority() ) return -1;

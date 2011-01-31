@@ -60,7 +60,6 @@ public class DTNConfigScreen extends Activity
 			
 			CloseButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
 				public void onClick(View v) {
 					DTNConfigScreen.this.finish();
 					
@@ -69,7 +68,6 @@ public class DTNConfigScreen extends Activity
 		
 			DTNConfigEditorButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
 				public void onClick(View v) {
 					Intent i = new Intent(DTNConfigScreen.this, DTNConfigEditor.class);
 					startActivity(i);
@@ -80,7 +78,6 @@ public class DTNConfigScreen extends Activity
 			
 			DTNSetSecurityPolicyButton.setOnClickListener(new OnClickListener() {
 				
-				@Override
 				public void onClick(View v) {
 					Intent i = new Intent(DTNConfigScreen.this, DTNSetSecurityPolicy.class);
 					startActivityForResult(i, SHOW_SECURITYPOLICY);

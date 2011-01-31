@@ -19,10 +19,7 @@
  */
 package se.kth.ssvl.tslab.bytewalla.androiddtn;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,7 +27,6 @@ import java.util.Iterator;
 
 import se.kth.ssvl.tslab.bytewalla.androiddtn.R;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.apps.DTNApps;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling.BundleDaemon;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.config.DTNConfiguration;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.config.DTNConfigurationParser;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.config.InvalidDTNConfigurationException;
@@ -42,10 +38,8 @@ import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.config.RoutesSetting.Route
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.contacts.ContactManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.contacts.Interface;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.contacts.Link;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.naming.EndpointID;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD.spd_direction_t;
-import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.security.SPD.spd_policy_t;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.storage.BundleStore;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.storage.GlobalStorage;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.storage.RegistrationStore;
@@ -60,11 +54,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -164,7 +155,7 @@ public class DTNManager extends Activity  {
 	 */
 	private TextView StoragePathTextView;
 	
-	private TextView PolicyCaptionTextView;
+//	private TextView PolicyCaptionTextView;
 	
 	private TextView PolicyInTextView;
 	
@@ -506,7 +497,7 @@ public class DTNManager extends Activity  {
 				.findViewById(R.id.DTNManager_AnnouncesListTextView);
 		BatteryStatusTextView = (TextView) this.findViewById(R.id.DTNManager_BatteryStatusTextView);
 		
-		PolicyCaptionTextView = (TextView) this.findViewById(R.id.DTNManager_PolicyCaptionTextView);
+		// PolicyCaptionTextView = (TextView) this.findViewById(R.id.DTNManager_PolicyCaptionTextView);
 		PolicyInTextView = (TextView) this.findViewById(R.id.DTNManager_PolicyInTextView);
 		PolicyOutTextView = (TextView) this.findViewById(R.id.DTNManager_PolicyOutTextView);
 		
@@ -519,7 +510,6 @@ public class DTNManager extends Activity  {
 		configurationButton = (Button) this	.findViewById(R.id.DTNManager_ConfigurationButton);
 		configurationButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				Intent i = new Intent(DTNManager.this, DTNConfigScreen.class);
 				// i = new Intent(DTNManager.this, DTNManager.class);
@@ -548,7 +538,6 @@ public class DTNManager extends Activity  {
 
 		startStopButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 
 				if (DTNService.is_running()) {
@@ -629,7 +618,6 @@ public class DTNManager extends Activity  {
 		restartButton.setEnabled(false);
 		restartButton.setOnClickListener(new OnClickListener() {
 
-			@Override
 			public void onClick(View v) {
 				// show progress dialog
 				LoadingDialog = ProgressDialog.show(self_, "Processing", "Restarting DTN Service...", true,
@@ -688,7 +676,6 @@ public class DTNManager extends Activity  {
 		appsButton = (Button) this.findViewById(R.id.DTNManager_AppsButton);
 		appsButton.setOnClickListener(new OnClickListener(){
 
-			@Override
 			public void onClick(View arg0) {
 				Intent i = new Intent(DTNManager.this, DTNApps.class);
 				startActivity(i);
@@ -699,7 +686,7 @@ public class DTNManager extends Activity  {
 
 		quitButton.setOnClickListener(new OnClickListener() {
 
-			@Override
+
 			public void onClick(View v) {
 				if (DTNService.is_running()) {
 					new AlertDialog.Builder(self_)
@@ -708,7 +695,6 @@ public class DTNManager extends Activity  {
 							.setPositiveButton("OK",
 									new DialogInterface.OnClickListener() {
 
-										@Override
 										public void onClick(
 												DialogInterface dialog,
 												int which) {
@@ -760,7 +746,6 @@ public class DTNManager extends Activity  {
 		
 		resetStorageButton.setOnClickListener(new OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				BundleStore.getInstance().reset_storage();
 				RegistrationStore.getInstance().reset_storage();
@@ -801,7 +786,6 @@ public class DTNManager extends Activity  {
 					new AlertDialog.Builder(self_).setMessage(message_bundle.getString("value")							)
 							.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-								@Override
 								public void onClick(
 										DialogInterface dialog,
 										int which) {
@@ -822,7 +806,6 @@ public class DTNManager extends Activity  {
 							message_bundle.getString("value"))
 							.setPositiveButton("OK",  new DialogInterface.OnClickListener() {
 
-								@Override
 								public void onClick(
 										DialogInterface dialog,
 										int which) {

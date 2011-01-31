@@ -19,8 +19,6 @@
  */
 package se.kth.ssvl.tslab.bytewalla.androiddtn;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Timer;
@@ -170,7 +168,6 @@ public class DTNService extends android.app.Service {
     	
     	battery_observer_ = new BatteryObserver() {
 			
-			@Override
 			public void update_battery_stat(BatteryStat btStat) {
 				battery_stat_ = btStat;
 				

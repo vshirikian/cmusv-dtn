@@ -77,22 +77,18 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 		backing_array_ = src.backing_array_.clone();
 	}
 
-	@Override
 	public int position() {
 		return position_;
 	}
 
-	@Override
 	public void position(int pos) {
 		position_ = pos;
 	}
 
-	@Override
 	public void rewind() {
 		position_ = 0;
 	}
 
-	@Override
 	public byte get() {
 
 		byte result = backing_array_[position_];
@@ -100,12 +96,10 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 		return result;
 	}
 
-	@Override
 	public byte get(int index) {
 		return backing_array_[index];
 	}
 
-	@Override
 	public void get(byte[] byte_array) 
 	{
 		for (int i = 0; i < byte_array.length; i++) {
@@ -114,7 +108,6 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 
 	}
 	
-	@Override
 	public void get(byte[] byte_array, int cant) 
 	{
 		for (int i = 0; i < cant; i++) {
@@ -124,13 +117,11 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 	}
 	
 
-	@Override
 	public void put(byte b) {
 		backing_array_[position_] = b;
 		position_++;
 	}
 
-	@Override
 	public void put(byte[] byte_array) {
 		for (int i = 0; i < byte_array.length; i++) {
 			backing_array_[position_++] = byte_array[i];
@@ -138,24 +129,20 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 
 	}
 
-	@Override
 	public byte[] array() {
 		return backing_array_.clone();
 	}
 
-	@Override
 	public IByteBuffer asReadOnlyBuffer() {
 
 		return new SerializableByteBuffer(this);
 	}
 
-	@Override
 	public int capacity() {
 
 		return capacity_;
 	}
 
-	@Override
 	public int getInt(int i) {
 		int old_position = position_;
 		position_ = i;
@@ -164,27 +151,23 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 		return result;
 	}
 
-	@Override
 	public int getInt() {
 		byte[] byte_array = new byte[4];
 		get(byte_array);
 		return byte_array_to_int(byte_array);
 	}
 
-	@Override
 	public short getShort() {
 		byte[] byte_array = new byte[2];
 		get(byte_array);
 		return byte_array_to_short(byte_array);
 	}
 
-	@Override
 	public void mark() {
 		mark_ = position_;
 
 	}
 
-	@Override
 	public void put(int index, byte b) {
 		backing_array_[index] = b;
 
@@ -192,7 +175,6 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 
 	
 
-	@Override
 	public void putInt(int value) {
 		byte[] byte_array = int_to_byte_array(value);
 		put(byte_array);
@@ -244,32 +226,27 @@ public class SerializableByteBuffer implements Serializable, IByteBuffer {
 
 	}
 
-	@Override
 	public void putShort(short value) {
 		byte[] byte_array = short_to_byte_array(value);
 		put(byte_array);
 
 	}
 
-	@Override
 	public int remaining() {
 		return capacity_ - position_;
 	}
 
-	@Override
 	public void reset() {
 		position_ = mark_;
 
 	}
 
-	@Override
 	public void writeWithStream(OutputStream out, int offset, int length) throws IOException {
 
 		out.write(backing_array_, offset, length);
 		
 	}
 
-	@Override
 	public void readFromStream(InputStream in) throws IOException {
 		int read_count = in.read(backing_array_, position_, remaining());
 		position_ += read_count;

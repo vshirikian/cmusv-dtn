@@ -814,7 +814,6 @@ public class Ciphersuite_C3 extends Ciphersuite
 						 * @param len (IN): length to decrypt
 						 * @param r (): 
 						 */
-						@Override
 						public boolean action(ServlibEventData data) 
 						{
 							//initialization
@@ -2088,7 +2087,6 @@ public class Ciphersuite_C3 extends Ciphersuite
 					 * @param len (IN): length to encrypt 
 					 * @param r (): 
 					 */
-					@Override
 					public boolean action(ServlibEventData data) 
 					{
 						//initialization

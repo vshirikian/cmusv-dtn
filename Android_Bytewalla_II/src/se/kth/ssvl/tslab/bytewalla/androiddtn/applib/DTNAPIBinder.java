@@ -121,7 +121,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNEndpointID,
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNServiceTag)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_build_local_eid(DTNHandle handle,
 			DTNEndpointID localEid, String service) {
 
@@ -159,7 +158,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * An implementation of the DTNAPI's dtn_open
 	 * @see se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPI#dtn_open
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_open(DTNHandle handle) {
 		lock_.lock();
 		try {
@@ -179,7 +177,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * An implementation of the DTNAPI's dtn_close
 	 * @see se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPI#dtn_close
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_close(DTNHandle handle) {
 
 		if (!is_handle_valid(handle))
@@ -207,7 +204,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNEndpointID,
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNRegistrationID)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_find_registrations(DTNHandle handle,
 			DTNEndpointID eid, List<Integer> registration_ids) {
 
@@ -247,7 +243,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNBundlePayload,
 	 * int)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_recv(DTNHandle handle, int regid,
 			DTNBundleSpec spec, 
 			DTNBundlePayload dtn_payload, int timeout) throws InterruptedException {
@@ -396,7 +391,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNRegistrationInfo,
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNRegistrationID)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_register(DTNHandle handle,
 			DTNRegistrationInfo reginfo, int[] newregid) throws DTNAPIFailException {
 
@@ -463,7 +457,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNBundlePayload,
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNBundleID)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_send(DTNHandle handle,
 			DTNBundleSpec spec, DTNBundlePayload dtn_payload,
 			DTNBundleID dtn_bundle_id) {
@@ -759,7 +752,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * .kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNHandle,
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNRegistrationID)
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_unregister(DTNHandle handle, int regid) {
 
 		Registration reg = BundleDaemon.getInstance().reg_table().get(regid);
@@ -859,7 +851,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * @see
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPI#dtn_bind
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_bind(DTNHandle handle, int regid) {
 		// look up the registration
 		RegistrationTable regtable = BundleDaemon.getInstance().reg_table();
@@ -917,7 +908,6 @@ public class DTNAPIBinder extends Binder implements DTNAPI {
 	 * @see
 	 * se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPI#dtn_unbind
 	 */
-	@Override
 	public dtn_api_status_report_code dtn_unbind(DTNHandle handle, int regid) {
 		handle.get_lock().lock();
 		try {
