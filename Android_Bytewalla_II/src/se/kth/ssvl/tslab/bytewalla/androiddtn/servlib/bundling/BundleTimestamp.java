@@ -23,6 +23,9 @@ package se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 import android.util.Log;
 
@@ -64,11 +67,17 @@ public class BundleTimestamp implements Serializable{
      * Static initialization
      */
     static {
-    	Calendar ref_calendar         = Calendar.getInstance();
-    	// set year to 2000 , start date is 1900
-    	ref_calendar.setTime(new Date(100,0,1));
-    	TIMEVAL_CONVERSION = ref_calendar.getTimeInMillis() / 1000;
-    }
+    	 String[] ids = TimeZone.getAvailableIDs(0);
+    	 // if no ids were returned, something is wrong. get out.
+    	 if (ids.length == 0)
+    	     System.exit(0);
+    	 // create a Pacific Standard Time time zone
+    	 SimpleTimeZone gmt = new SimpleTimeZone(0, ids[0]);
+    	 Calendar calendar = new GregorianCalendar(gmt);
+	    // Need to set time to 1 Jan, 2000 since dtn makes that time zero
+    	 calendar.set(2000, 0, 1, 0, 0, 0);
+    	 TIMEVAL_CONVERSION = calendar.getTimeInMillis() / 1000;    
+    	}
     
     /**
      * Constructor by parts.
