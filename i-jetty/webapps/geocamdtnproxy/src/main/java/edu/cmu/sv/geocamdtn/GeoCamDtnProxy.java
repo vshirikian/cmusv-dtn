@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.mortbay.servlet.MultiPartRequest;
+import org.mortbay.servlet.MultiPartRequest;
 
 
 
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GeoCamDtnProxy extends HttpServlet 
 {
     String proofOfLife = null;
+    DTNServiceConnector serviceConnector = null;
     
     /* ------------------------------------------------------------ */
     public void init(ServletConfig config) throws ServletException
@@ -31,26 +32,33 @@ public class GeoCamDtnProxy extends HttpServlet
         android.content.ContentResolver resolver = (android.content.ContentResolver)o;
         android.content.Context androidContext = (android.content.Context)config.getServletContext().getAttribute("org.mortbay.ijetty.context");
         proofOfLife = androidContext.getApplicationInfo().packageName;
+        
+        serviceConnector = new DTNServiceConnector(context);
     }
 
     /* ------------------------------------------------------------ */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-	// Lets the uuid to construct the receipt	
-	// MultiPartRequest mPRequest = new MultiPartRequest(request);
-	// String uuid_key = "uuid";
-	// String uuid;
-	// if (mPRequest.contains(uuid_key))
-	//     {
-	// 	uuid = mPRequest.getString(uuid_key);
-	//     }
-	sendResponse(response, "stuff");
+		// Gets the uuid to construct the receipt	
+		MultiPartRequest mPRequest = new MultiPartRequest(request);
+		// String uuid_key = "uuid";
+		// String uuid;
+		// if (mPRequest.contains(uuid_key))
+		//     {
+		// 	uuid = mPRequest.getString(uuid_key);
+		//     }
+    	sendResponse(response, "stuff");
+    	
+    	// Send bundle
+    	serviceConnector.bindDTNService();
+    	//serviceConnector.send(mPRequest.);
+    	serviceConnector.unbindDTNService();
     }
     
     private void sendResponse(HttpServletResponse response, String uuid) throws IOException
     {
         response.setContentType("text/html");
-	PrintWriter out = response.getWriter();
+        PrintWriter out = response.getWriter();
         //ServletOutputStream out = response.getOutputStream();
         //out.println("<html>");
         // out.println("file posted <!--\nGEOCAM_SHARE_POSTED %s\n-->");
