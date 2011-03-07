@@ -18,6 +18,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <android.sdk.version>8</android.sdk.version>
+    <android.platform>platforms/android-${android.sdk.version}</android.platform>
   </properties>
 
   <dependencies>
@@ -26,6 +28,19 @@
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>android</groupId>
+      <artifactId>android</artifactId>
+      <version>${android.sdk.version}</version>
+      <scope>system</scope>
+      <systemPath>${android.home}${file.separator}${android.platform}${file.separator}android.jar</systemPath>
     </dependency>
   </dependencies>
 </project>
