@@ -34,7 +34,7 @@ public class GeoCamDtnProxy extends HttpServlet
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final String TAG = "edu.cmu.sv.geocamdt.ServletProxy";
+	private static final String TAG = "edu.cmu.sv.geocamdtn.ServletProxy";
     private android.content.Context androidContext;
 
     /* ------------------------------------------------------------ */
