@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="edu.cmu.sv.geocamdtn"
+      android:versionCode="1"
+      android:versionName="1.0">
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <service android:name=".GeoCamDTNService" android:exported="true">
+    		<intent-filter>
+    			<action android:name="edu.cmu.sv.geocamdtn.ACTION_CREATE_DTN_BUNDLE" />
+    		</intent-filter>
+    	</service>
+	</application>
+</manifest> 
