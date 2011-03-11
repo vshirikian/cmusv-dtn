@@ -1,5 +1,6 @@
 package edu.cmu.sv.geocamdtn;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Iterator;
@@ -21,8 +22,9 @@ import edu.cmu.sv.geocamdtn.lib.Constants;
 
 
 /* ------------------------------------------------------------ */
-/** GeoCamDtnProxy Servlet 
- *  Receives the mime encoded data from geocam and sends it to the
+/** 
+ * GeoCamDtnProxy Servlet 
+ * Receives the mime encoded data from geocam and sends it to the
  * geocam dtn service for dtn transport.
  * Returns a transmitted receipt to the geocamlens application. 
  *
@@ -52,9 +54,10 @@ public class GeoCamDtnProxy extends HttpServlet
     {
     	// Just some debug for the params 
     	Map<String, String[]> params = request.getParameterMap();
+    	File file = (File) request.getAttribute( Constants.FILE_KEY );
     	// since we will call getParameter, we cannot use the inputstream or the buffered reader
     	// so lets reecreate the mime encoded data and then send it to dtn
-    	sendToDTN(params);
+    	sendToDTN(params, file);
 
     	Iterator i = params.keySet().iterator();
     	while ( i.hasNext() )
@@ -101,7 +104,7 @@ public class GeoCamDtnProxy extends HttpServlet
      * GeoCamDTN service for dtn enqueing.
      *
      */
-    private void sendToDTN(Map params)
+    private void sendToDTN(Map params, File file)
     {
 		// lets create a bundle with all that we need
 		Bundle data = new Bundle();
@@ -115,6 +118,7 @@ public class GeoCamDtnProxy extends HttpServlet
 			values = ((String[]) params.get( key ));
 			data.putStringArray(key, values);
 		    }
+		data.putSerializable(Constants.FILE_KEY, file);
 		Intent geoCamDTNIntent = new Intent(Constants.ACTION_CREATE_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
 		androidContext.startService(geoCamDTNIntent);	
