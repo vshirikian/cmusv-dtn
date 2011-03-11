@@ -104,7 +104,7 @@ public class GeoCamDtnProxy extends HttpServlet
      * GeoCamDTN service for dtn enqueing.
      *
      */
-    private void sendToDTN(Map params, File file)
+    private void sendToDTN(Map<String, String[]> params, File file)
     {
 		// lets create a bundle with all that we need
 		Bundle data = new Bundle();
