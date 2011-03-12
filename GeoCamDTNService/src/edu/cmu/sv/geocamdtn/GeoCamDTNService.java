@@ -1,9 +1,15 @@
 package edu.cmu.sv.geocamdtn;
 
 import edu.cmu.sv.geocamdtn.lib.Constants;
+import edu.cmu.sv.geocamdtn.lib.MimeEncoder;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPIBinder;
@@ -30,10 +36,12 @@ import android.util.Log;
 public class GeoCamDTNService extends IntentService {
 	
 	/**
-	 * Logging tags for supporting Android logging mechanism
+	 * Logging tag for supporting Android logging mechanism
 	 */
-	private static final String SEND_TAG = "GeoCamDTNSend";
 	private static final String TAG = "edu.cmu.sv.geocamdtn.GeoCamDTNService";
+	
+	private static final String TEMP_FILE_PREFIX = "dtn";
+	private static final String TEMP_FILE_SUFFIX = ".tmp";
 	
 	/**
 	 * The service connection to communicate with DTNService 
@@ -64,30 +72,44 @@ public class GeoCamDTNService extends IntentService {
 		unbindDTNService();
 	}
 	
+	/**
+	 * The extra data for an incoming intent should contain String arrays
+	 * whose keys map to the params for a multi-part MIME message.
+	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
-		Set<String> keys = data.keySet();
-		String randomKey = (String)keys.toArray()[0];
-		String value = data.getStringArray(randomKey)[0];
-		String msg = "Handling intent: " + value;
-		Log.d(TAG, msg);
+		Iterator<String> iter = data.keySet().iterator();
 		
-		// Need to send the toast to the main thread, since this is an intentservice
-		// this method is running on a background thread
+		Map<String, String[]> mimeData = new HashMap<String, String[]>();
+		String key;
+		String[] values;
+		File file = null;
 		
-		//Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
-		//toast.show();
+		while (iter.hasNext()) {
+			key = iter.next();
+			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
+				try {
+					file = File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, this.getFilesDir());
+					FileOutputStream fos = new FileOutputStream(file);
+					fos.write(data.getByteArray(key));
+				} catch (IOException e) {
+					Log.e(TAG, "Error generating temporary file: " + e);
+				}
+			} else {
+				values = data.getStringArray(key);
+				mimeData.put(key, values);
+			}
+		}
 		
-	    /*  long endTime = System.currentTimeMillis() + 5*1000;
-	      while (System.currentTimeMillis() < endTime) {
-	          synchronized (this) {
-	              try {
-	                  wait(endTime - System.currentTimeMillis());
-	              } catch (Exception e) {
-	              }
-	          }
-	      }*/
+		byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
+		try {
+			sendMessage(bundlePayload);
+		} catch (DTNAPIFailException de) {
+			Log.e(TAG, "Failed to successfully send DTN bundle: " + de);
+		} catch (Exception e) {
+			Log.e(TAG, "Error while preparing DTN bundle: " + e);
+		}
 	}
 
 	/**
@@ -104,12 +126,12 @@ public class GeoCamDTNService extends IntentService {
 	private void bindDTNService() {
 		conn = new ServiceConnection() {
 			public void onServiceConnected(ComponentName arg0, IBinder ibinder) {
-				Log.i(SEND_TAG, "DTN Service is bound");
+				Log.i(TAG, "DTN Service is bound");
 				dtn_api_binder = (DTNAPIBinder) ibinder;
 			}
 
 			public void onServiceDisconnected(ComponentName arg0) {
-				Log.i(SEND_TAG, "DTN Service is Unbound");
+				Log.i(TAG, "DTN Service is Unbound");
 				dtn_api_binder = null;
 			}
 
