@@ -4,8 +4,6 @@ import edu.cmu.sv.geocamdtn.lib.Constants;
 import edu.cmu.sv.geocamdtn.lib.MimeEncoder;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,9 +37,6 @@ public class GeoCamDTNService extends IntentService {
 	 * Logging tag for supporting Android logging mechanism
 	 */
 	private static final String TAG = "edu.cmu.sv.geocamdtn.GeoCamDTNService";
-	
-	private static final String TEMP_FILE_PREFIX = "dtn";
-	private static final String TEMP_FILE_SUFFIX = ".tmp";
 	
 	/**
 	 * The service connection to communicate with DTNService 
@@ -89,8 +84,7 @@ public class GeoCamDTNService extends IntentService {
 			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
 				file = (File) data.getSerializable(key);
 			} else {
-				String[] values = data.getStringArray(key);
-				mimeData.put(key, values);
+				mimeData.put(key, data.getStringArray(key));
 			}
 		}
 			
