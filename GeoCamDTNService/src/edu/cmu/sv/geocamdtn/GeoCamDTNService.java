@@ -82,34 +82,25 @@ public class GeoCamDTNService extends IntentService {
 		Iterator<String> iter = data.keySet().iterator();
 		
 		Map<String, String[]> mimeData = new HashMap<String, String[]>();
-		String key;
-		String[] values;
 		File file = null;
 		
-		try {
-			while (iter.hasNext()) {
-				key = iter.next();
-				if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
-					file = File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, this.getFilesDir());
-					FileOutputStream fos = new FileOutputStream(file);
-					fos.write(data.getByteArray(key));
-				} else {
-					values = data.getStringArray(key);
-					mimeData.put(key, values);
-				}
+		while (iter.hasNext()) {
+			String key = iter.next();
+			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
+				file = (File) data.getSerializable(key);
+			} else {
+				String[] values = data.getStringArray(key);
+				mimeData.put(key, values);
 			}
-		
+		}
+			
+		try {
 			byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
 			sendMessage(bundlePayload);
 		} catch (DTNAPIFailException de) {
 			Log.e(TAG, "Failed to successfully send DTN bundle: " + de);
 		} catch (Exception e) {
 			Log.e(TAG, "Error while preparing DTN bundle: " + e);
-		} finally {
-			// Clean up the temp file, if one was created.
-			if (file != null) {
-				file.delete();
-			}
 		}
 	}
 
