@@ -86,23 +86,19 @@ public class GeoCamDTNService extends IntentService {
 		String[] values;
 		File file = null;
 		
-		while (iter.hasNext()) {
-			key = iter.next();
-			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
-				try {
+		try {
+			while (iter.hasNext()) {
+				key = iter.next();
+				if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
 					file = File.createTempFile(TEMP_FILE_PREFIX, TEMP_FILE_SUFFIX, this.getFilesDir());
 					FileOutputStream fos = new FileOutputStream(file);
 					fos.write(data.getByteArray(key));
-				} catch (IOException e) {
-					Log.e(TAG, "Error generating temporary file: " + e);
+				} else {
+					values = data.getStringArray(key);
+					mimeData.put(key, values);
 				}
-			} else {
-				values = data.getStringArray(key);
-				mimeData.put(key, values);
 			}
-		}
 		
-		try {
 			byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
 			sendMessage(bundlePayload);
 		} catch (DTNAPIFailException de) {
