@@ -102,13 +102,18 @@ public class GeoCamDTNService extends IntentService {
 			}
 		}
 		
-		byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
 		try {
+			byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
 			sendMessage(bundlePayload);
 		} catch (DTNAPIFailException de) {
 			Log.e(TAG, "Failed to successfully send DTN bundle: " + de);
 		} catch (Exception e) {
 			Log.e(TAG, "Error while preparing DTN bundle: " + e);
+		} finally {
+			// Clean up the temp file, if one was created.
+			if (file != null) {
+				file.delete();
+			}
 		}
 	}
 
