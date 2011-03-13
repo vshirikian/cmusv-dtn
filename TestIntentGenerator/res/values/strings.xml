@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Press the button to send an Intent to GeoCamDTNService</string>
+    <string name="app_name">Test Intent Generator</string>
+<string name="buttonLabel">Send</string>
+</resources>
