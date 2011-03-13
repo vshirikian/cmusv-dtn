@@ -78,7 +78,7 @@ public class GeoCamDTNService extends IntentService {
 		
 		Map<String, String[]> mimeData = new HashMap<String, String[]>();
 		File file = null;
-		
+		Log.i(TAG, "About to mime encode intent bundle");
 		while (iter.hasNext()) {
 			String key = iter.next();
 			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
@@ -137,7 +137,7 @@ public class GeoCamDTNService extends IntentService {
 		// Setting DTNBundle Payload according to the values
 		DTNBundlePayload dtn_payload = new DTNBundlePayload(dtn_bundle_payload_location_t.DTN_PAYLOAD_MEM);
 		dtn_payload.set_buf(message);
-		   
+		Log.i(TAG, "We are creating a dtn bundle");   
 		// Start the DTN Communication
 		DTNHandle dtn_handle = new DTNHandle();
 		dtn_api_status_report_code open_status = dtn_api_binder.dtn_open(dtn_handle);
@@ -147,11 +147,13 @@ public class GeoCamDTNService extends IntentService {
 			
 			// Destination is static gateway
 			spec.set_dest(new DTNEndpointID(Constants.STATIC_GATEWAY_EID));
+			Log.i(TAG, "Set static gateway to " + Constants.STATIC_GATEWAY_EID);   
 			
 			// set the source EID from the bundle Daemon
 			spec.set_source(new DTNEndpointID(BundleDaemon.getInstance().local_eid().toString()));
 			
 			spec.set_expiration(Constants.BUNDLE_EXPIRATION);
+			Log.i(TAG, "Set bundle expiration to " + Constants.BUNDLE_EXPIRATION);   
 
 			spec.set_dopts(Constants.BUNDLE_DOPTS);
 			// Set priority
@@ -159,7 +161,9 @@ public class GeoCamDTNService extends IntentService {
 			
 			// Data structure to get result from the IBinder
 			DTNBundleID dtn_bundle_id = new DTNBundleID();
-			
+
+			Log.i(TAG, "Sending bundle ...");   
+
 			dtn_api_status_report_code api_send_result =  dtn_api_binder.dtn_send(dtn_handle, 
 					spec, 
 					dtn_payload, 
