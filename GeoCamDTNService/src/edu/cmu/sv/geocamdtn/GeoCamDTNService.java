@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPIBinder;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPICode.dtn_api_status_report_code;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPICode.dtn_bundle_payload_location_t;
@@ -92,9 +91,11 @@ public class GeoCamDTNService extends IntentService {
 			byte[] bundlePayload = MimeEncoder.toMime(mimeData, file);
 			sendMessage(bundlePayload);
 		} catch (DTNAPIFailException de) {
-			Log.e(TAG, "Failed to successfully send DTN bundle: " + de);
+			Log.e(TAG, "Failed to successfully send DTN bundle");
+			de.printStackTrace();
 		} catch (Exception e) {
-			Log.e(TAG, "Error while preparing DTN bundle: " + e);
+			Log.e(TAG, "Error while preparing DTN bundle");
+			e.printStackTrace();
 		}
 	}
 
@@ -123,8 +124,8 @@ public class GeoCamDTNService extends IntentService {
 
 		};
 
-		Intent i = new Intent(this, DTNService.class);
-		bindService(i, conn, BIND_AUTO_CREATE);	
+		Intent i = new Intent(this, se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService.class);
+		bindService(i, conn, BIND_AUTO_CREATE);
 	}
 	
 	/**

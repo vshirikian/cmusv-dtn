@@ -9,5 +9,6 @@
     			<action android:name="edu.cmu.sv.geocamdtn.ACTION_CREATE_DTN_BUNDLE" />
     		</intent-filter>
     	</service>
+    	<service  android:name="se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService" android:label="DTNService"  ></service>
 	</application>
 </manifest> 
