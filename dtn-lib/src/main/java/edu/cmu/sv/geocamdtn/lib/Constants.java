@@ -2,6 +2,7 @@ package edu.cmu.sv.geocamdtn.lib;
 
 public interface Constants {
 	static final String ACTION_CREATE_DTN_BUNDLE = "edu.cmu.sv.geocamdtn.ACTION_CREATE_DTN_BUNDLE";
+	static final String ACTION_RECEIVE_DTN_BUNDLE = "edu.cmu.sv.geocamdtn.ACTION_RECEIVE_DTN_BUNDLE";
 	static final String ACTION_MEDIATE_DTN_BUNDLE = "edu.cmu.sv.geocamdtn.ACTION_MEDIATE_DTN_BUNDLE";
 
 	
@@ -20,5 +21,5 @@ public interface Constants {
 	// DTN bundle constants
 	static final String STATIC_GATEWAY_EID = "dtn://staticgw.dtn/geocam";
 	static final int BUNDLE_EXPIRATION = 0; // Never expires
-	static final int BUNDLE_DOPTS = 0; // no option processing for now
+	static final int BUNDLE_DOPTS = 0; // No option processing for now
 }

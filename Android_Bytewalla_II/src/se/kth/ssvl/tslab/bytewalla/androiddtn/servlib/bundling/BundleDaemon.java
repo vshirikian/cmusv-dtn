@@ -29,6 +29,9 @@ import java.util.ListIterator;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import edu.cmu.sv.geocamdtn.lib.Constants;
+
+import android.content.Intent;
 import android.util.Log;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
@@ -1005,6 +1008,13 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 		 * "Finally, bounce out so the router(s) can do something further with
 		 * the bundle in response to the event." [DTN2]
 		 */
+
+		/*
+		 * Intent generation for receive event to trigger
+		 */
+		Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
+		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, bundle);
+		DTNService.context().startService(geoCamDTNIntent);
 	}
 
 	protected void handle_bundle_transmitted(BundleTransmittedEvent event) {
