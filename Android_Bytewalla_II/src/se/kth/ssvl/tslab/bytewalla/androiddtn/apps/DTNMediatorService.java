@@ -1,11 +1,8 @@
 package se.kth.ssvl.tslab.bytewalla.androiddtn.apps;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
+import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPIBinder;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPICode.dtn_api_status_report_code;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPICode.dtn_bundle_payload_location_t;
@@ -18,21 +15,27 @@ import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNHandle;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling.BundleDaemon;
 
 import edu.cmu.sv.geocamdtn.lib.Constants;
+import android.app.IntentService;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.util.Log;
 
-public class DTNMediatorService extends Service {
+public class DTNMediatorService extends IntentService {
+	
+	public DTNMediatorService() {
+		super("DTNMediatorService");
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Logging tag for supporting Android logging mechanism
 	 */
 	private static final String TAG = "edu.cmu.sv.geocamdtn.DTNMediatorService";
-	
-	private boolean isBound = false;
 
 	/**
 	 * The service connection to communicate with DTNService 
@@ -44,11 +47,13 @@ public class DTNMediatorService extends Service {
 	 */
 	private DTNAPIBinder dtn_api_binder;
 	
+	private ConditionVariable serviceCondition;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		Log.d(TAG, "Creating mediator");
-		isBound = false;
+		serviceCondition = new ConditionVariable();
 		bindDTNService();
 	}
 
@@ -76,7 +81,7 @@ public class DTNMediatorService extends Service {
 			public void onServiceConnected(ComponentName arg0, IBinder ibinder) {
 				Log.i(TAG, "DTN Service is bound");
 				dtn_api_binder = (DTNAPIBinder) ibinder;
-				isBound = true;
+				serviceCondition.open();
 			}
 
 			public void onServiceDisconnected(ComponentName arg0) {
@@ -86,10 +91,9 @@ public class DTNMediatorService extends Service {
 
 		};
 
-		Intent i = new Intent(this, se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService.class);
+		Intent i = new Intent(DTNMediatorService.this, DTNService.class);
 		Log.d(TAG, "About to bind service");
 		bindService(i, conn, BIND_AUTO_CREATE);
-		
 	}
 
 	
@@ -103,20 +107,10 @@ public class DTNMediatorService extends Service {
 	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
 	 */
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId) {
-		// 
-		while (dtn_api_binder == null)
-		{
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Log.i(TAG, "Waiting for bound.");
-		}
+	public void onHandleIntent(Intent intent) {
 		Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
-		try {
+		try {			
+			serviceCondition.block();
 			createDTNBundle(data);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -128,7 +122,6 @@ public class DTNMediatorService extends Service {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return super.onStartCommand(intent, flags, startId);
 	}
 	
 	private void createDTNBundle(Bundle params) throws UnsupportedEncodingException, DTNOpenFailException, DTNAPIFailException 
