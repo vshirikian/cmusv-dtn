@@ -1,0 +1,48 @@
+Content-Type: multipart/form-data; boundary=--------multipart_formdata_boundary$--------
+User-Agent: Dalvik/1.4.0 (Linux; U; Android 2.3.2; Nexus S Build/GRH78C)
+Host: 192.168.10.101:8080
+Content-Length: 12304
+Accept-Encoding: gzip
+
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="tags"
+
+default
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="yaw"
+
+347.5095520019531
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="roll"
+
+-117.52790832519531
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="yawRef"
+
+M
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="cameraTime"
+
+2011-03-16 01:03:41
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="longitude"
+
+0.0
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="uuid"
+
+cd9b86a2-a091-423d-880f-bb226fb12896
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="latitude"
+
+0.0
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="notes"
+
+bpb 
+----------multipart_formdata_boundary$--------
+Content-Disposition: form-data; name="pitch"
+
+-87.40988159179688
+----------multipart_formdata_boundary$----------
+
