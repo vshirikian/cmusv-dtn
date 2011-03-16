@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# script to dynamically add dtn contacts (links + routes) on dhcp lease
+# calls a modified version of 'dtn-control' which is a delivered in DTN2/tools
+# author - vache.shirikian@gmail.com
+# modified - 2011.03.15
+#
+# $1 = add, old, del
+# $2 = client MAC address
+# $3 = client IP address
+# $4 = client hostname
+
+echo "$1 -- /etc/dtnd-control link_route_add $3 4556 dtn://$4.dtn/* $2_tcp" >> /var/log/dtn_contact.log
+/etc/dtnd-control link_route_add $3 4556 dtn://$4.dtn/* $2_tcp

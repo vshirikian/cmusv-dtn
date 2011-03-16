@@ -1,0 +1,128 @@
+#!/usr/bin/tclsh
+
+set port 5050
+
+proc usage {} {
+    puts stderr "dtnd-control \[-port port\] \[stop|check|logrotate\] \[link_route_add ip port eid linkname\]"
+    exit 1
+}
+
+proc shift {listVar} {
+    upvar $listVar l
+    
+    set ret [lindex $l 0]
+    set l [lrange $l 1 end]
+    return $ret
+}
+
+after 30000 {exit 1}
+
+while {[llength $argv] == 2} {
+    set arg [shift argv]
+
+    if {[string index $arg 0] != "-"} {
+	break
+    }
+	
+    switch -- $arg {
+	-port   { set port [shift argv] }
+	default {
+	    puts stderr "unknown argument $arg"
+	    usage
+	}
+    }
+}
+
+set operation [shift argv]
+
+if [catch {
+    set sock [socket localhost $port]
+
+} err] {
+    if {$operation == "stop"} {
+        puts "(already stopped)"
+        exit 0
+    }
+    puts stderr "dtnd-control: cannot connect to localhost port $port"
+    exit 1
+}
+
+puts $sock "tell_encode"
+flush $sock
+set ret1 [gets $sock]; # the prompt
+set ret2 [gets $sock]; # the command response
+
+if {$operation == "check" || $operation == "status"} {
+    set cmd "bundle daemon_status"
+    puts $sock $cmd
+    flush $sock
+    
+} elseif {$operation == "stop"} {
+    set cmd "shutdown"
+    puts $sock $cmd
+    flush $sock
+    
+} elseif {$operation == "logrotate"} {
+    set cmd "log rotate"
+    puts $sock $cmd
+    flush $sock
+
+# added by vache.shirikian@gmail.com - 2011.03.15
+} elseif {$operation == "link_route_add"} {
+    set ip [shift argv]
+    set port [shift argv]
+    set eid [shift argv]
+    set linkname [shift argv]
+
+    # link add linkname ip:port ONDEMAND tcp
+    puts stdout "link add $linkname $ip:$port ONDEMAND tcp"
+    set cmd "link add $linkname $ip:$port ONDEMAND tcp"
+    puts $sock $cmd
+    flush $sock
+    gets $sock
+
+    # route del eid linkname (to get rid of duplicate routes)
+    set cmd "route del $eid"
+    puts $sock $cmd
+    flush $sock
+    gets $sock
+
+    # route add eid linkname
+    puts stdout "route add $eid $linkname"
+    set cmd "route add $eid $linkname"
+    puts $sock $cmd
+    flush $sock
+
+} else {
+    error "bogus op $operation"
+}
+
+
+set cmd_response [gets $sock]
+if {($cmd_response == "") || [eof $sock]} {
+    puts stderr "error getting response"
+    exit 1
+}
+
+set cmd_error [string index $cmd_response 0]
+set result    [string range $cmd_response 2 end]
+regsub -all -- {\\n} $result "\n" result
+
+if {$cmd_error == 0} {
+    puts $result
+
+    # if the daemon is stopping, wait until the socket closes before
+    # exiting the script so we know it's actually dead
+    if {$operation == "stop"} {
+        catch {gets $sock}
+        after 1000
+    }
+    
+    exit 0
+} else {
+    puts "error running command '$cmd':"
+    puts $result
+    exit 1
+}
+
+exit 0
