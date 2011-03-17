@@ -1,0 +1,5 @@
+*dex
+*.ap_ 
+*/bin/*
+*/gen/*
+*/target/*

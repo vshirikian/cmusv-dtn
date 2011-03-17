@@ -32,6 +32,13 @@ public class MimeEncoder {
 		// can potentially use the multipart writer from jetty servlet
 		ByteArrayOutputStream bufferedStream = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(bufferedStream);
+		try {
+			out.writeBytes("Content-Type: multipart/form-data; boundary=" + BOUNDARY + CRLF);
+			out.writeBytes(CRLF);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		String fileName = null;
 		for (String key : params.keySet()) {
 			// Don't create a filename part yet 

@@ -36,8 +36,6 @@ public class GeoCamDtnProxy extends HttpServlet
 	private static final long serialVersionUID = 1L;
 	private static final String TAG = "edu.cmu.sv.geocamdtn.ServletProxy";
 	// Unused
-	// private static final String UUID_KEY = "uuid";
-	private static final String FILENAME_KEY = "photo";
     private android.content.Context androidContext;
 
     /* ------------------------------------------------------------ */
@@ -61,7 +59,7 @@ public class GeoCamDtnProxy extends HttpServlet
 
     	// Unused
     	// String uuid = request.getParameter(UUID_KEY);
-    	String fileName = request.getParameter(FILENAME_KEY);
+    	String fileName = request.getParameter(Constants.FILE_KEY);
     	Log.d(TAG, "Filename is " + fileName);
     	if (null != fileName)
 	    {
@@ -108,6 +106,10 @@ public class GeoCamDtnProxy extends HttpServlet
 		while (iter.hasNext()) {
 			key = iter.next();
 			value = request.getParameter(key);
+			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
+				key = "filename";
+			}
+			Log.i(TAG, "Adding " + key + " -> " + value + "to intent bundle");
 			data.putString(key, value);
 	    }
 		data.putSerializable(Constants.FILE_KEY, file);

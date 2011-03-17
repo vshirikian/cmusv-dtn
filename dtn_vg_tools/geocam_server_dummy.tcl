@@ -106,6 +106,7 @@ proc register {} {
     set eid $opt(eid)
     if {$eid == ""} {
         set eid [dtn_build_local_eid $handle "geocam"]
+	set eid "dtn://staticgw.dtn/geocam"
         if {$eid == ""} {
             error "error in dtn_build_local_eid: [dtn_strerror [dtn_errno $handle]]"
         }
@@ -157,16 +158,36 @@ proc flattenMime {message} {
     return $result
 }
 
+proc uniq { filename } {
+    # lets grab a number from the file name 
+    # regexp {([:digit:]+)$} $filename idx
+    set ext [file extension $filename]
+    set idx 0
+    set rootfilename [file rootname $filename]
+    set tempname $rootfilename
+    append tempname "-${idx}${ext}"
+    while { [file exists $tempname] } {
+	set tempname $rootfilename
+	incr idx 1
+	append tempname "-${idx}${ext}"
+    }
+
+    return $tempname
+}
+
+
 #----------------------------------------------------------------------
 proc writeImage {filename data} {
    if [catch {open $filename w} fileId] {
 	puts stderr "Cannot open $filename : $fileId"
     } else {
+	fconfigure $fileId -translation binary -encoding binary
 	puts -nonewline $fileId $data
 	flush $fileId
 	close $fileId
     }
 }
+#----------------------------------------------------------------------
 
 #----------------------------------------------------------------------
 proc saveParts {parts} {
@@ -179,17 +200,20 @@ proc saveParts {parts} {
     set idx [expr [lsearch -exact $parts "filename"] + 1 ]
     set fileName [lindex $parts $idx]
 
+    set photoFile [uniq [file join $dir $fileName]]
+    set uuid [file rootname $photoFile]
+
     #dbg "$uuid"
-    set outputFile [file join $dir ${uuid}.txt]
-    dbg "Set outputfile $outputFile"
+    set outputFile ${uuid}.txt
+
+    # dbg "Set outputfile $outputFile"
     if [catch {open $outputFile w} fileId] {
-	puts stderr "Cannot opeb $outputFile : $fileId"
+	puts stderr "Cannot open $outputFile : $fileId"
     } else {
 	foreach {key value} $parts {
 	    #dbg "$key $value"
 	    if {[string equal $key "photo"]} {
-		puts "Photo found"
-		set photoFile [file join $dir $fileName]
+		
 		writeImage $photoFile $value
 	    } else {
 		puts $fileId "$key $value"
@@ -245,17 +269,17 @@ proc flattenMime {message} {
 	    set key [lindex [lindex $header 1] 1]
 	    # dbg $header
 	    # dbg $key 
-	    lappend result "$key $content"
+	    lappend result $key $content
 	    if {[string equal $key "photo"]} {
-		set fileName [lindex [lindex $header 1] 3]
-		#dbg "Filename is $fileName"
-		lappend result "filename $fileName"
+	    	set fileName [lindex [lindex $header 1] 3]
+	    	dbg "Filename is $fileName"
+	    	lappend result filename $fileName
 	    }
         }
     }  else {
         # for multipart/*, we'll iterate over children
         # to see if any of them contains the attachment
-	dbg "Children $children"
+	# dbg "Children $children"
         foreach token $children {
 	    # dbg "token is $token" 
 	    # dbg -nonewline "Body is " 
@@ -268,14 +292,23 @@ proc flattenMime {message} {
     return $result
 }
 #----------------------------------------------------------------------
-proc sendReceipt {parts dst} {
-    global handle regid DTN_PAYLOAD_MEM
+proc sendReceipt {parts src dst} {
+    global handle regid DTN_PAYLOAD_MEM COS_NORMAL
     set idx [expr [lsearch -exact $parts "filename"] + 1 ]
-    set fileName [lindex $parts $idx]    
+    set fileName [lindex $parts $idx]
     set receipt "<html> file posted <!--\nGEOCAM_SHARE_POSTED $fileName\n--></html>"
-    set eid [dtn_build_local_eid $handle "geocam"]
+    # set eid [dtn_build_local_eid $handle "geocam"]
+    set eid $src
+    dbg "Sending receipt ..."
+    dbg $receipt
     
     set id [dtn_send $handle $regid $eid $dst dtn:none $COS_NORMAL 0 30 $DTN_PAYLOAD_MEM $receipt]
+    # puts "bundle id:"
+    # puts "  source: [dtn_bundle_id_source_get $id]"
+    # puts "  creation_secs: [dtn_bundle_id_creation_secs_get $id]"
+    # puts "  creation_seqno: [dtn_bundle_id_creation_seqno_get $id]"
+    delete_dtn_bundle_id $id
+
 }
 #----------------------------------------------------------------------
 proc proxy_loop {} {
@@ -309,6 +342,12 @@ proc proxy_loop {} {
         dbg "  payload: $payload_file"
         dbg "  payload_size: [file size $payload_file]"
 
+	# set fd [open $payload_file r]
+	# set message [read $fd]
+	# Let try and parse the mime data 
+	# dbg $message
+
+
 	set token ""
 	if {[catch {
 	    set token [mime::initialize -file $payload_file]
@@ -319,7 +358,7 @@ proc proxy_loop {} {
 	set parts [flattenMime $token]
 	# write data to disk
 	saveParts $parts
-	sendReceipt $parts $source
+	sendReceipt $parts $dest $source
 	flush stdout
     }
 }

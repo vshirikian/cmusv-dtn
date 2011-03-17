@@ -233,11 +233,11 @@ proc saveParts {parts} {
 
 #----------------------------------------------------------------------
 proc proxy_loop {} {
-    set payload_file "./raw_geocam.txt"
+    set payload_file "./sample1.txt"
     set fd [open $payload_file r]
     set message [read $fd]
     # Let try and parse the mime data 
-    # dbg $message
+    dbg $message
 
     # dbg [ncgi::multipart "Content-Type: multipart/form-data; boundary=----------------31415926535", $message]
 
