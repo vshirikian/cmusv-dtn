@@ -45,9 +45,8 @@
     <service  android:name=".apps.DTNMediatorService" android:label="DTNMediatorService"  >
       <intent-filter>
     			<action android:name="edu.cmu.sv.geocamdtn.ACTION_MEDIATE_DTN_BUNDLE" />
-    			<action android:name="edu.cmu.sv.geocamdtn.ACTION_RECEIVE_DTN_BUNDLE" />
-      </intent-filter>
-    </service>
+    		</intent-filter>
+      </service>
     
 </application>
     <uses-sdk android:minSdkVersion="8" />
