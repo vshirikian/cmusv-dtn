@@ -19,7 +19,7 @@ public class TestIntentGenerator extends Activity {
     public void sendIntent(View view) {
 		Bundle data = new Bundle();
 
-		data.putStringArray("test", new String[] {"data1", "data2"});
+		data.putString("test", "data");
 
 		Intent geoCamDTNIntent = new Intent(Constants.ACTION_CREATE_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
