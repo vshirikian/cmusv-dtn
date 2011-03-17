@@ -22,20 +22,19 @@
 	<!--  Links Section -->
 	<tns:LinksSetting>
 	<!--  Setup your links here -->
-		<tns:Link id="vg1_tcp" conv_layer_type="tcp" dest="192.168.10.101:4556" type="ONDEMAND" />
-		<tns:Link id="vg2_tcp"    conv_layer_type="tcp" dest="192.168.10.105:4556" type="ONDEMAND" />
-		<tns:Link id="tattoo_viavillage_link"    conv_layer_type="tcp" dest="192.168.1.29:4556" type="ONDEMAND" />
-		<tns:Link id="tattoo_viacity_link"    conv_layer_type="tcp" dest="192.168.2.29:4556" type="ONDEMAND" />
-		<tns:Link id="tattoo_tcp_link"    conv_layer_type="tcp" dest="192.168.1.29:4556" type="ONDEMAND" />
-		
+		<tns:Link id="ace1_tcp" conv_layer_type="tcp" dest="192.168.1.1:4556" type="ONDEMAND" />
+		<tns:Link id="ace2_tcp" conv_layer_type="tcp" dest="192.168.2.1:4556" type="ONDEMAND" />
 	</tns:LinksSetting>
 	
 	
-	<!--  Routes Section -->
-	<tns:RoutesSetting router_type="static" local_eid="dtn://nexus.dtn">
+	<!-- Routes Section -->
+	<!-- vache: need to figure out a way to assign phone hostname to local_eid -->
+	<tns:RoutesSetting router_type="static" local_eid="dtn://droid.dtn/geocam">
 	<!--  Setup your routes here -->
-		<tns:Route dest="dtn://vg1.dtn/*" link_id="vg1_tcp"/>
-		<tns:Route dest="dtn://vg2.dtn/*" link_id="vg2_tcp"/>	
+		<tns:Route dest="dtn://ace1.dtn/*" link_id="ace1_tcp"/>
+		<tns:Route dest="dtn://ace2.dtn/*" link_id="ace2_tcp"/>
+		<tns:Route dest="dtn://staticgw.dtn/*" link_id="ace1_tcp"/>
+		<tns:Route dest="dtn://staticgw.dtn/*" link_id="ace2_tcp"/>
 	</tns:RoutesSetting>
 	
 	

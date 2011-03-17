@@ -1,27 +1,11 @@
 CMU-SV Spring 2011 Practicum
-DTN Vehicular Gateway Prototype
---------
+Team DTN Github Repository
+spring-2011-dtn<at>sv.cmu.edu
+----------------
 *dtn_agent/ -> dtn-2.7.0 + oasys-1.4.0 source and binaries as of Jan 2011; compiled on Ubuntu 10.10 x86 netbook edition with Linux kernel 2.6.35-25
-*Android_Bytewalla_II/ -> source and binaries for bytewalla Android dtn implementation as of Jan 2011
-
-# how-to compile dtnd (dtn_agent) on ubuntu #
-1. sudo apt-get update && sudo apt-get upgrade && sudo apt-get install tcl-dev build-essential zlib1g-dev libdb-dev libreadline-dev tclreadline libxerces-c2-dev libexpat1-dev libgoogle-perftools-dev 
-2. 'cd oasys-1.4.0 && ./configure --with-google-perftools --enable-google-profiling --with-xsd-tool=xmllint --with-dbver=4.8 --with-zlib && make'
-3. 'cd dtn-2.7.0 && ./configure'
-4. create symbolic link or rename 'oasys-1.4.0' to 'oasys'
-5. edit last line in 'dtn-2.7.0/dtn-config.h' to reflect actual location of oasys (e.g. #include <../oasys/oasys-config.h>)
-6. edit 'dtn-2.7.0/apps/dtnperf/dtnperf-server.c', change "#include <config.h>" to "#include <dtn-config.h>"  
-7. 'cd dtn-2.7.0 && make'
-8. set-up alias' to launch dtnd and tools easily in rc file, e.g...
-
-# alias to start dtnd in interactive mode
-alias dtnd='~/cmusv-dtn/dtn_agent/dtn-2.7.0/daemon/dtnd -c ~/cmusv-dtn/dtn_agent/dtnd/dtn.conf -l info'
-
-# alias' to apps
-alias dtnping=~/cmusv-dtn/dtn_agent/dtn-2.7.0/apps/dtnping/dtnping
-alias dtnsend=~/cmusv-dtn/dtn_agent/dtn-2.7.0/apps/dtnsend/dtnsend
-alias dtnrecv=~/cmusv-dtn/dtn_agent/dtn-2.7.0/apps/dtnrecv/dtnrecv
-
-# alias to quickly get to dtnd_dir
-alias dtnd_dir='cd ~/cmusv-dtn/dtn_agent/dtnd'
-
+*dtn-lib/ -> our shared library (Constants live here), maven project
+*dtn_vg_tools/ -> access point configuration scripts and TCL scripts for receipts
+*i-jetty-2.2/ -> i-jetty-parent folder (contains i-jetty-server), maven project (import pom.xml at top-level)
+*geocamdtnproxy -> webapp which is downloaded to i-jetty on Android phone, maven project
+*Android_Bytewalla_II/ -> source and binaries for bytewalla Android dtn implementation as of Jan 2011, eclipse project
+*GeoCamDTNService -> Android service plays mediator to 'geocamdtnproxy' webapp <-> and DTNMediatorServer (part of Bytewalla), eclipse project
