@@ -36,7 +36,7 @@ public class GeoCamDTNService extends IntentService {
 		Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
 		Iterator<String> iter = data.keySet().iterator();
 		
-		Map<String, String[]> mimeData = new HashMap<String, String[]>();
+		Map<String, String> mimeData = new HashMap<String, String>();
 		File file = null;
 		Log.i(TAG, "About to mime encode intent bundle");
 		while (iter.hasNext()) {
@@ -44,7 +44,7 @@ public class GeoCamDTNService extends IntentService {
 			if (key.equalsIgnoreCase(Constants.FILE_KEY)) {
 				file = (File) data.getSerializable(key);
 			} else {
-				mimeData.put(key, data.getStringArray(key));
+				mimeData.put(key, data.getString(key));
 			}
 		}
 			

@@ -27,46 +27,31 @@ public class MimeEncoder {
     private static final String TAG = "GeoCamDTNLib::MimeEncoder";
 
 
-	public static byte[] toMime(Map<String,String[]> params, File file)
+	public static byte[] toMime(Map<String,String> params, File file)
 	{
 		// can potentially use the multipart writer from jetty servlet
 		ByteArrayOutputStream bufferedStream = new ByteArrayOutputStream();
 		DataOutputStream out = new DataOutputStream(bufferedStream);
-		String [] values;
 		String fileName = null;
-		for (String key : params.keySet()) 
-			{
-				// Don't create a filename part yet 
-				if (!key.equalsIgnoreCase("filename"))
-				{
-					try 
-					{
-						out.writeBytes("--" + BOUNDARY + CRLF);
-						out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + CRLF);
-						out.writeBytes(CRLF);
-						values = params.get(key);
-						for (String value : values)
-						{
-							out.writeBytes(value + CRLF);
-						}
-					} 
-					catch (IOException e) 
-					{
-						Log.d(TAG, "IOException whiles generating Mime data");
-						e.printStackTrace();
-					}
+		for (String key : params.keySet()) {
+			// Don't create a filename part yet 
+			if (!key.equalsIgnoreCase("filename")) {
+				try {
+					out.writeBytes("--" + BOUNDARY + CRLF);
+					out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"" + CRLF);
+					out.writeBytes(CRLF);
+					out.writeBytes(params.get(key) + CRLF);
+				} catch (IOException e) {
+					Log.d(TAG, "IOException whiles generating Mime data");
+					e.printStackTrace();
 				}
-				else
-				{
-					fileName = params.get(key)[0];
-				}
-	        }
+			} else {
+				fileName = params.get(key);
+			}
+        }
 		
-		if (null != fileName)
-		{
-
-			try 
-			{
+		if (null != fileName) {
+			try {
 				out.writeBytes("--" + BOUNDARY + CRLF);
 				// Now lets write out the file object 
 				out.writeBytes("Content-Disposition: form-data; name=\"" + Constants.FILE_KEY

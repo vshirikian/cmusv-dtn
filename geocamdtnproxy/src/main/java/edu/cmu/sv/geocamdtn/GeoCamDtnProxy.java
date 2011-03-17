@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -54,21 +53,11 @@ public class GeoCamDtnProxy extends HttpServlet
     /* ------------------------------------------------------------ */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	// Just some debug for the params 
-    	@SuppressWarnings("unchecked")
-		Map<String, String[]> params = request.getParameterMap();
     	File file = (File) request.getAttribute( Constants.FILE_KEY );
+    	
     	// since we will call getParameter, we cannot use the inputstream or the buffered reader
     	// so lets reecreate the mime encoded data and then send it to dtn
-    	sendToDTN(params, file);
-
-    	Iterator<String> i = params.keySet().iterator();
-    	while ( i.hasNext() )
-    	{
-    		String key = i.next();
-    		String value = request.getParameter(key);
-    		Log.d(TAG, key + " " + value);
-    	}
+    	sendToDTN(request, file);
 
     	// Unused
     	// String uuid = request.getParameter(UUID_KEY);
@@ -106,20 +95,21 @@ public class GeoCamDtnProxy extends HttpServlet
      * GeoCamDTN service for dtn enqueing.
      *
      */
-    private void sendToDTN(Map<String, String[]> params, File file)
-    {
+    private void sendToDTN(HttpServletRequest request, File file)
+    {    	
 		// lets create a bundle with all that we need
 		Bundle data = new Bundle();
-		Iterator<String> i = params.keySet().iterator();
+		
+    	@SuppressWarnings("unchecked")
+		Iterator<String> iter = request.getParameterMap().keySet().iterator();
 		String key;
-		String[] values;
+		String value;
 
-		while ( i.hasNext() )
-		    {
-			key = (String) i.next();
-			values = ((String[]) params.get( key ));
-			data.putStringArray(key, values);
-		    }
+		while (iter.hasNext()) {
+			key = iter.next();
+			value = request.getParameter(key);
+			data.putString(key, value);
+	    }
 		data.putSerializable(Constants.FILE_KEY, file);
 		Intent geoCamDTNIntent = new Intent(Constants.ACTION_CREATE_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
