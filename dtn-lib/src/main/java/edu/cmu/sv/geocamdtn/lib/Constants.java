@@ -20,6 +20,6 @@ public interface Constants {
 	
 	// DTN bundle constants
 	static final String STATIC_GATEWAY_EID = "dtn://staticgw.dtn/geocam";
-	static final int BUNDLE_EXPIRATION = 0; // Never expires
+	static final int BUNDLE_EXPIRATION = 3600 * 48; // 48 hour expiration on bundles
 	static final int BUNDLE_DOPTS = 0; // No option processing for now
 }
