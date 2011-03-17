@@ -384,6 +384,7 @@ public abstract class BundleRouter extends BundleEventHandler {
 
 		// "check if we've already sent or are in the process of sending
 		// the bundle on this link" [DTN2]
+<<<<<<< HEAD
 		if (info!=null)
 		{
 		if (info.state() == ForwardingInfo.state_t.TRANSMITTED
@@ -393,6 +394,18 @@ public abstract class BundleRouter extends BundleEventHandler {
 					.bundleid(), link.name(), info.state().toString()));
 			return false;
 		}
+=======
+		if (info != null)	{
+			// XXX: vache - weird NPE on info (even though it checks on the previous line of code)
+			// added redundant check for info != null, inline
+			if (info != null && (info.state() == ForwardingInfo.state_t.TRANSMITTED
+					|| info.state() == ForwardingInfo.state_t.QUEUED)) {
+				Log.d(TAG, String.format("should_fwd bundle %d: "
+						+ "skip %s due to forwarding log entry %s", bundle
+						.bundleid(), link.name(), info.state().toString()));
+				return false;
+			}
+>>>>>>> 10377b8d8d2704eaa0c78d39bac0e45538475749
 		}
 		// "check if we've already sent or are in the process of sending
 		// the bundle to the node via some other link" [DTN2]

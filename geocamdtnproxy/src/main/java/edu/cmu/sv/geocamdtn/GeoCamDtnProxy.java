@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,6 +35,9 @@ public class GeoCamDtnProxy extends HttpServlet
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final String TAG = "edu.cmu.sv.geocamdtn.ServletProxy";
+	// Unused
+	// private static final String UUID_KEY = "uuid";
+	private static final String FILENAME_KEY = "photo";
     private android.content.Context androidContext;
 
     /* ------------------------------------------------------------ */
@@ -52,25 +53,15 @@ public class GeoCamDtnProxy extends HttpServlet
     /* ------------------------------------------------------------ */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-    	// Just some debug for the params 
-    	Map<String, String[]> params = request.getParameterMap();
     	File file = (File) request.getAttribute( Constants.FILE_KEY );
+    	
     	// since we will call getParameter, we cannot use the inputstream or the buffered reader
     	// so lets reecreate the mime encoded data and then send it to dtn
-    	sendToDTN(params, file);
+    	sendToDTN(request, file);
 
-    	Iterator i = params.keySet().iterator();
-    	while ( i.hasNext() )
-    	{
-    		String key = (String) i.next();
-    		String value = ((String[]) params.get( key ))[ 0 ];
-    		Log.d(TAG, key + " " + value);
-    	}
-
-    	String uuidKey = "uuid";
-    	String uuid = request.getParameter(uuidKey);
-    	String fileNameKey = "photo";
-    	String fileName = request.getParameter(fileNameKey);
+    	// Unused
+    	// String uuid = request.getParameter(UUID_KEY);
+    	String fileName = request.getParameter(FILENAME_KEY);
     	Log.d(TAG, "Filename is " + fileName);
     	if (null != fileName)
 	    {
@@ -104,20 +95,21 @@ public class GeoCamDtnProxy extends HttpServlet
      * GeoCamDTN service for dtn enqueing.
      *
      */
-    private void sendToDTN(Map<String, String[]> params, File file)
-    {
+    private void sendToDTN(HttpServletRequest request, File file)
+    {    	
 		// lets create a bundle with all that we need
 		Bundle data = new Bundle();
-		Iterator i = params.keySet().iterator();
+		
+    	@SuppressWarnings("unchecked")
+		Iterator<String> iter = request.getParameterMap().keySet().iterator();
 		String key;
-		String[] values;
+		String value;
 
-		while ( i.hasNext() )
-		    {
-			key = (String) i.next();
-			values = ((String[]) params.get( key ));
-			data.putStringArray(key, values);
-		    }
+		while (iter.hasNext()) {
+			key = iter.next();
+			value = request.getParameter(key);
+			data.putString(key, value);
+	    }
 		data.putSerializable(Constants.FILE_KEY, file);
 		Intent geoCamDTNIntent = new Intent(Constants.ACTION_CREATE_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);

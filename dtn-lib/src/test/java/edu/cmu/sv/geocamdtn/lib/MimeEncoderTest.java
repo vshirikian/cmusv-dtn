@@ -4,7 +4,6 @@
 package edu.cmu.sv.geocamdtn.lib;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ import junit.framework.TestCase;
  */
 public class MimeEncoderTest extends TestCase {
 	
-	private Map<String, String[]> params = new HashMap<String,String[]>();
+	private Map<String, String> params = new HashMap<String, String>();
 
 	/* (non-Javadoc)
 	 * @see junit.framework.TestCase#setUp()
@@ -29,25 +28,25 @@ public class MimeEncoderTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 		
-		String[] value = {"2011-03-03 03:07:48"};
+		String value = "2011-03-03 03:07:48";
 		params.put("cameraTime", value);
-		value[0] = "37.3969559449682";
+		value = "37.3969559449682";
 		params.put("latitude", value);
- 		value[0] = "-122.09753102009303";
+ 		value = "-122.09753102009303";
  		params.put("longitude", value);
- 		value[0] = "-0.7124386429786682";
+ 		value = "-0.7124386429786682";
         params.put("roll", value);
-        value[0] = "-10.63682746887207";
+        value = "-10.63682746887207";
         params.put("pitch", value);
-        value[0] = "375.8007173538208";
+        value = "375.8007173538208";
         params.put("yaw", value);
-        value[0] = "";
+        value = "";
         params.put("notes", value);
-        value[0] = "default";  
+        value = "default";  
         params.put("tags", value);
-        value[0] = "0e9d12c4-46c2-4b88-a5c5-39d1ac7621ff";
+        value = "0e9d12c4-46c2-4b88-a5c5-39d1ac7621ff";
         params.put("uuid", value);
-        value[0] = "T";
+        value = "T";
         params.put("yawRef", value);
 	}
 
