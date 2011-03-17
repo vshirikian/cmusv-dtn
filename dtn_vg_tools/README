@@ -1,0 +1,21 @@
+This directory contains debug tools for the DTN. 
+
+================================================
+DUMMY GEOCAM SERVER
+================================================
+This is a tcl script that is meant to send GEOCAM 
+receipts for all registered clients when it starts up.
+It then sits and listens for bundles sent for it.
+It will write out the supplementary data to a txt file,
+the image will be written to a jpg file. 
+
+To run the script, just make it executable and ran it.
+1. chmow u+x geocam_server_dummy.tcl 
+2. ./geocam_server_dummy.tcl 
+Alternatively, you can run tclsh geocam_server_dummy.tcl 
+
+1. tclsh geocam_server_dummy.tcl 
+
+
+
+
