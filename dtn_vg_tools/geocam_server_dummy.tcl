@@ -17,7 +17,7 @@
 
 package require http
 package require mime
-packae require ncgi
+
 
 load libdtntcl[info sharedlibextension] dtnapi
 
@@ -268,12 +268,25 @@ proc flattenMime {message} {
     return $result
 }
 #----------------------------------------------------------------------
+proc sendReceipt {parts dst} {
+    global handle regid DTN_PAYLOAD_MEM
+    set idx [expr [lsearch -exact $parts "filename"] + 1 ]
+    set fileName [lindex $parts $idx]    
+    set receipt "<html> file posted <!--\nGEOCAM_SHARE_POSTED $fileName\n--></html>"
+    set eid [dtn_build_local_eid $handle "geocam"]
+    
+    set id [dtn_send $handle $regid $eid $dst dtn:none $COS_NORMAL 0 30 $DTN_PAYLOAD_MEM $receipt]
+}
+#----------------------------------------------------------------------
 proc proxy_loop {} {
     # On start-up queue one fake receipt to be delivered. 
     # for each host that we know off
     # Now loop and create reciepts for each time 
     # we get process a request
     global handle DTN_PAYLOAD_FILE
+    # Send a dummy receipt to each geocam link that we have 
+    
+
     while {1} {
         dbg "calling dtn_recv..."
         set bundle [dtn_recv $handle $DTN_PAYLOAD_FILE -1]
@@ -296,8 +309,8 @@ proc proxy_loop {} {
         dbg "  payload: $payload_file"
         dbg "  payload_size: [file size $payload_file]"
 
+	set token ""
 	if {[catch {
-	    #set token [mime::initialize -canonical "multipart/form-data" -encoding base64 -file $payload_file]
 	    set token [mime::initialize -file $payload_file]
 	} error]} {
 	    dbg "Error while parsing message: $error"
@@ -306,6 +319,7 @@ proc proxy_loop {} {
 	set parts [flattenMime $token]
 	# write data to disk
 	saveParts $parts
+	sendReceipt $parts $source
 	flush stdout
     }
 }

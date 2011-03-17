@@ -10,12 +10,13 @@ It will write out the supplementary data to a txt file,
 the image will be written to a jpg file. 
 
 To run the script, just make it executable and ran it.
-1. chmow u+x geocam_server_dummy.tcl 
+1. chmod u+x geocam_server_dummy.tcl 
 2. ./geocam_server_dummy.tcl 
 Alternatively, you can run tclsh geocam_server_dummy.tcl 
 
 1. tclsh geocam_server_dummy.tcl 
 
+#NOTE: You can specify the -v option to get debug info
 
 
 
