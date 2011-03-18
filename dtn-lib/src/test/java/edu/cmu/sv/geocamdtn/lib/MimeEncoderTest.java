@@ -62,7 +62,7 @@ public class MimeEncoderTest extends TestCase {
 	 */
 	public void testToMime() {
 		byte[] result = MimeEncoder.toMime(params, null);
-		int expectedNumParts = params.size() - 1;
+		int expectedNumParts = params.size();
 		// lets decode the result 
 		ByteArrayInputStream resultStream = new ByteArrayInputStream(result);
 		MimeBodyPart bodyPart = null;
