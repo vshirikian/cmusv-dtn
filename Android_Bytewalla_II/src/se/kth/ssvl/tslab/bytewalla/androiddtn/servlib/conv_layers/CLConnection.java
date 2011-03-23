@@ -178,7 +178,7 @@ public abstract class CLConnection extends CLInfo implements Runnable {
 				return;
 			}
 
-			Log.d(TAG, "CLConnection is still running in the main loop, cmdqueue_ size is " + cmdqueue_.size());
+//			Log.d(TAG, "CLConnection is still running in the main loop, cmdqueue_ size is " + cmdqueue_.size());
 			// "check the command queue coming in from the bundle daemon
 			// if any arrive, we continue to the top of the loop to check
 			// contact_broken and then process any other commands before

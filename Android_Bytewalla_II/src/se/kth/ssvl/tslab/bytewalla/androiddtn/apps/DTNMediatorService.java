@@ -2,6 +2,7 @@ package se.kth.ssvl.tslab.bytewalla.androiddtn.apps;
 
 import java.io.UnsupportedEncodingException;
 
+import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPIBinder;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.DTNAPICode.dtn_api_status_report_code;
@@ -12,6 +13,7 @@ import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNBundlePayload;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNBundleSpec;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNEndpointID;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.applib.types.DTNHandle;
+import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling.Bundle;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling.BundleDaemon;
 
 import edu.cmu.sv.geocamdtn.lib.Constants;
@@ -20,7 +22,6 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Bundle;
 import android.os.ConditionVariable;
 import android.os.IBinder;
 import android.util.Log;
@@ -108,23 +109,40 @@ public class DTNMediatorService extends IntentService {
 	 */
 	@Override
 	public void onHandleIntent(Intent intent) {
-		Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
-		try {			
-			serviceCondition.block();
-			createDTNBundle(data);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DTNOpenFailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DTNAPIFailException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// Receive Android bundle from intent
+		android.os.Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
+
+		// If intent is from BundleDaemon:handle_bundle_received
+		if (intent.getAction().equals(Constants.ACTION_RECEIVE_DTN_BUNDLE)) {
+	        // Receive DTN bundle from intent
+	        Bundle bundle = (Bundle)data.getSerializable(Constants.DTN_BUNDLE_KEY);
+	        
+	        // Extract payload from DTN bundle
+            byte[] payload = new byte[bundle.payload().length()];
+            bundle.payload().read_data(0, bundle.payload().length(), payload);
+            
+            // For now, just notify user received return receipt bundle payload
+            DTNManager.getInstance().notify_user("GeoCam Return Receipt", "Payload: " + new String(payload));
+            Log.e(TAG, "GEOCAM RETURN RECEIPT from " + bundle.source().uri() + ": " + new String(payload));
+		// If intent is from GeoCamDTNService
+		} else if (intent.getAction().equals(Constants.ACTION_MEDIATE_DTN_BUNDLE)) {
+			try {			
+				serviceCondition.block();
+				createDTNBundle(data);
+			} catch (UnsupportedEncodingException e) {
+				Log.e(TAG, "UnsupportedEncodingException" + e);
+				e.printStackTrace();
+			} catch (DTNOpenFailException e) {
+				Log.e(TAG, "DTNOpenFailException" + e);
+				e.printStackTrace();
+			} catch (DTNAPIFailException e) {
+				Log.e(TAG, "DTNAPIFailException" + e);
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	private void createDTNBundle(Bundle params) throws UnsupportedEncodingException, DTNOpenFailException, DTNAPIFailException 
+	private void createDTNBundle(android.os.Bundle params) throws UnsupportedEncodingException, DTNOpenFailException, DTNAPIFailException 
 	{
 		String destination = params.getString(Constants.DTN_DEST_EID_KEY); 
 		int expiration = params.getInt(Constants.DTN_EXPIRATION_KEY);
