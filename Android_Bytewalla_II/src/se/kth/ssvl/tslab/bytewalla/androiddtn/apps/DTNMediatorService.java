@@ -23,7 +23,6 @@ import se.kth.ssvl.tslab.bytewalla.androiddtn.servlib.bundling.BundleDaemon;
 import edu.cmu.sv.geocamdtn.lib.Constants;
 import edu.cmu.sv.geocamdtn.lib.MimeEncoder;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
