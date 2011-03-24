@@ -113,7 +113,7 @@ public class GeoCamDtnProxy extends HttpServlet
 			data.putString(key, value);
 	    }
 		data.putSerializable(Constants.FILE_KEY, file);
-		Intent geoCamDTNIntent = new Intent(Constants.ACTION_CREATE_DTN_BUNDLE);
+		Intent geoCamDTNIntent = new Intent(Constants.ACTION_MEDIATE_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
 		androidContext.startService(geoCamDTNIntent);	
     }

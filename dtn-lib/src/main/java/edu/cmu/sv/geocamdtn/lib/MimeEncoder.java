@@ -27,6 +27,10 @@ public class MimeEncoder {
     private static final String TAG = "GeoCamDTNLib::MimeEncoder";
 
 
+    /*
+     * Utility method for constructing a multipart message from the map
+     * of parameters for a GeoCam image upload request.
+     */
 	public static byte[] toMime(Map<String,String> params, File file)
 	{
 		// can potentially use the multipart writer from jetty servlet
