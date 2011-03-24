@@ -720,25 +720,6 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 		case EVENTSRC_PEER:
 			stats_.received_bundles_++;
 			DTNManager.getInstance().notify_user("DTN Bundle Received", "From " + bundle.source().toString());
-			
-			/*
-			 * Intent generation to trigger receipt event
-             * Only process bundles as return receipts if their destination is your EID
-			 */
-            if (bundle != null && bundle.dest().equals(BundleDaemon.getInstance().local_eid())) {
-            	android.os.Bundle data = new android.os.Bundle();
-            	data.putSerializable(Constants.DTN_BUNDLE_KEY, bundle);
-            	
-            	Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
-            	geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
-            	
-            	DTNService.context().startService(geoCamDTNIntent);
-            	
-//            	byte[] payload = new byte[bundle.payload().length()];
-//                bundle.payload().read_data(0, bundle.payload().length(), payload);
-//            	Log.e(TAG, "!@#$%^&*() ---- RETURN RECEIPT INTENT PAYLOAD: " + new String(payload));
-            }
-			
 			break;
 
 		case EVENTSRC_APP:
@@ -898,6 +879,25 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 				event.set_daemon_only(true);
 				return;
 			}
+			
+			
+			/*
+			 * Intent generation used to trigger receipt event
+             * Only process bundles as return receipts if their destination is your EID
+			 */
+            if (bundle != null) {
+            	android.os.Bundle data = new android.os.Bundle();
+            	data.putSerializable(Constants.DTN_BUNDLE_KEY, bundle);
+            	
+            	Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
+            	geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
+            	
+            	DTNService.context().startService(geoCamDTNIntent);
+            	
+//            	byte[] payload = new byte[bundle.payload().length()];
+//                bundle.payload().read_data(0, bundle.payload().length(), payload);
+//            	Log.e(TAG, "!@#$%^&*() ---- RETURN RECEIPT INTENT PAYLOAD: " + new String(payload));
+            }
 		}
 
 		/*

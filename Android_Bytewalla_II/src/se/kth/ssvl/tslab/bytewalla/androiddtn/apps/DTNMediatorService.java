@@ -122,14 +122,20 @@ public class DTNMediatorService extends IntentService {
 	        // Receive DTN bundle from intent
 	        Bundle bundle = (Bundle)data.getSerializable(Constants.DTN_BUNDLE_KEY);
 	        
+	        // Only process receipts that are destined to this device
+	        if (!bundle.dest().equals(BundleDaemon.getInstance().local_eid())) {
+	        	return;
+	        }
+	        
 	        // Extract payload from DTN bundle
             byte[] payload = new byte[bundle.payload().length()];
             bundle.payload().read_data(0, bundle.payload().length(), payload);
             
             // For now, just notify user received return receipt bundle payload
             DTNManager.getInstance().notify_user("GeoCam Return Receipt", "Payload: " + new String(payload));
-            Log.d(TAG, "GEOCAM RETURN RECEIPT from " + bundle.source().uri() + ": " + new String(payload));
-		// If intent is from GeoCam proxy
+            Log.i(TAG, "GEOCAM RETURN RECEIPT from " + bundle.source().uri() + ": " + new String(payload));
+            
+		// If intent is from GeoCamDTNProxy
 		} else if (action.equals(Constants.ACTION_MEDIATE_DTN_BUNDLE)) {
 			try {			
 				serviceCondition.block();
