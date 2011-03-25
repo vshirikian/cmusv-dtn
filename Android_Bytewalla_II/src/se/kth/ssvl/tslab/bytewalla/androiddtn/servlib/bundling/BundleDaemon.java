@@ -883,21 +883,21 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 			
 			/*
 			 * Intent generation used to trigger receipt event
-             * Only process bundles as return receipts if their destination is your EID
 			 */
-            if (bundle != null) {
-            	android.os.Bundle data = new android.os.Bundle();
-            	data.putSerializable(Constants.DTN_BUNDLE_KEY, bundle);
-            	
-            	Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
-            	geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, data);
-            	
-            	DTNService.context().startService(geoCamDTNIntent);
-            	
+//            if (bundle != null) {
+//            	Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
+//
+//            	android.os.Bundle data = new android.os.Bundle();
+//            	data.putSerializable(Constants.DTN_BUNDLE_KEY, bundle);
+//            	geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, bundle);
+//            	
+//            	DTNService.context().startService(geoCamDTNIntent);
+//            	
+//            	// Debug code
 //            	byte[] payload = new byte[bundle.payload().length()];
 //                bundle.payload().read_data(0, bundle.payload().length(), payload);
 //            	Log.e(TAG, "!@#$%^&*() ---- RETURN RECEIPT INTENT PAYLOAD: " + new String(payload));
-            }
+//            }
 		}
 
 		/*
