@@ -113,6 +113,8 @@ public class DTNMediatorService extends IntentService {
 			android.os.Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
 	        // Receive DTN bundle from intent and process
 	        Bundle bundle = (Bundle)data.getSerializable(Constants.DTN_BUNDLE_KEY);
+	        
+	        // Process bundle
 	        processReturnReceipt(bundle);
             
 		// If intent is from GeoCamDTNProxy
@@ -139,6 +141,7 @@ public class DTNMediatorService extends IntentService {
 	 * @param bundle
 	 */
 	private void processReturnReceipt(Bundle bundle) {
+		Log.i(TAG, "PROCESSING BUNDLE from " + bundle.source().uri());
 		// Only a return receipt if destined to this device
 		if (!bundle.dest().equals(BundleDaemon.getInstance().local_eid())) {
 			return;
