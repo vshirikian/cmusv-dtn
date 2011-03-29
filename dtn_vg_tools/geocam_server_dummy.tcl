@@ -302,7 +302,7 @@ proc sendReceipt {parts src dst} {
     dbg "Sending receipt ..."
     dbg $receipt
     
-    set id [dtn_send $handle $regid $eid $dst dtn:none $COS_NORMAL 0 30 $DTN_PAYLOAD_MEM $receipt]
+    set id [dtn_send $handle $regid $eid $dst dtn:none $COS_NORMAL 0 86400 $DTN_PAYLOAD_MEM $receipt]
     # puts "bundle id:"
     # puts "  source: [dtn_bundle_id_source_get $id]"
     # puts "  creation_secs: [dtn_bundle_id_creation_secs_get $id]"
