@@ -165,16 +165,20 @@ interface add udp0 udp
 #
 # e.g.  link add link1 dtn.dtnrg.org ONDEMAND tcp
 #       link add link2 dtn2.dtnrg.org:10000 ONDEMAND tcp
-link add ace2_tcp ace2:4556 ONDEMAND tcp
+link add ace1_tcp 192.168.1.1:4556 ONDEMAND tcp
+link add ace2_tcp 192.168.2.1:4556 ONDEMAND tcp
 
-#
+
 # route add <dest> <link|peer>
 #
 # Add a route to the given bundle endpoint id pattern <dest> using the
 # specified link name or peer endpoint.
 #
 # e.g. route add dtn://host.domain/* tcp0
+route add dtn://ace1.dtn/* ace1_tcp
 route add dtn://ace2.dtn/* ace2_tcp
+route add dtn://droid.dtn/* ace1_tcp
+route add dtn://droid.dtn/* ace2_tcp
 
 ########################################
 #
