@@ -200,7 +200,8 @@ proc proxy_loop {} {
 
             # send return receipt bundle
             set resp [open "./response.html" r]
-            send_receipt "<html>[read $resp]</html>" $source $dest
+            #send_receipt "<html>[read $resp]</html>" $source $dest
+            send_receipt [read $resp] $source $dest
             close $resp
             
         } err] {
