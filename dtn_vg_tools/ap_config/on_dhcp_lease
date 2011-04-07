@@ -10,5 +10,6 @@
 # $3 = client IP address
 # $4 = client hostname
 
-echo "$1 -- /etc/dtnd-control link_route_add $3 4556 dtn://$4.dtn/* $2_tcp" >> /var/log/dtn_contact.log
-/etc/dtnd-control link_route_add $3 4556 dtn://$4.dtn/* $2_tcp
+eid=$(echo $4|sed 's/_//g')
+echo "$1 -- /etc/dtnd-control link_route_add $3 4556 dtn://$eid.dtn/* $2_tcp" >> /var/log/dtn_contact.log
+/etc/dtnd-control link_route_add $3 4556 dtn://$eid.dtn/* $2_tcp

@@ -177,8 +177,8 @@ link add ace2_tcp 192.168.2.1:4556 ONDEMAND tcp
 # e.g. route add dtn://host.domain/* tcp0
 route add dtn://ace1.dtn/* ace1_tcp
 route add dtn://ace2.dtn/* ace2_tcp
-route add dtn://droid.dtn/* ace1_tcp
-route add dtn://droid.dtn/* ace2_tcp
+route add dtn://*droid*.dtn/* ace1_tcp
+route add dtn://*droid*.dtn/* ace2_tcp
 
 ########################################
 #
