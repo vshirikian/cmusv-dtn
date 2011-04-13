@@ -56,7 +56,7 @@ public class GeoCamDTNService extends IntentService {
 		mediatorData.putString(Constants.DTN_DEST_EID_KEY, Constants.STATIC_GATEWAY_EID);
 		mediatorData.putInt(Constants.DTN_EXPIRATION_KEY, Constants.BUNDLE_EXPIRATION);
 		
-		Intent dtnMediatorIntent = new Intent(Constants.ACTION_MEDIATE_DTN_BUNDLE);
+		Intent dtnMediatorIntent = new Intent(Constants.ACTION_SEND_DTN_BUNDLE);
 		dtnMediatorIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, mediatorData);
 		this.startService(dtnMediatorIntent);
 	}

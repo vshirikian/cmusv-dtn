@@ -21,33 +21,33 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.ConditionVariable;
 import android.os.IBinder;
+import android.provider.Settings.Secure;
 import android.util.Log;
 import edu.cmu.sv.geocamdtn.lib.Constants;
 
-public class DTNMediatorService extends IntentService {
-	
-	public DTNMediatorService() {
-		super("DTNMediatorService");
-		// TODO Auto-generated constructor stub
+public class DTNSendMediatorService extends IntentService {
+
+	public DTNSendMediatorService() {
+		super("DTNSendMediatorService");
 	}
 
 	/**
 	 * Logging tag for supporting Android logging mechanism
 	 */
-	private static final String TAG = "se.kth.ssvl.tslab.bytewalla.DTNMediatorService";
+	private static final String TAG = "se.kth.ssvl.tslab.bytewalla.DTNSendMediatorService";
 
 	/**
-	 * The service connection to communicate with DTNService 
+	 * The service connection to communicate with DTNService
 	 */
 	private ServiceConnection conn;
-	
+
 	/**
 	 * DTNAPIBinder object
 	 */
 	private DTNAPIBinder dtn_api_binder;
-	
+
 	private ConditionVariable serviceCondition;
-	
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -59,7 +59,7 @@ public class DTNMediatorService extends IntentService {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
+
 		unbindDTNService();
 	}
 
@@ -69,7 +69,7 @@ public class DTNMediatorService extends IntentService {
 	private void unbindDTNService() {
 		unbindService(conn);
 	}
-	
+
 	/**
 	 * bind the DTNService to use the API later
 	 */
@@ -89,7 +89,7 @@ public class DTNMediatorService extends IntentService {
 
 		};
 
-		Intent i = new Intent(DTNMediatorService.this, DTNService.class);
+		Intent i = new Intent(DTNSendMediatorService.this, DTNService.class);
 		Log.d(TAG, "About to bind service");
 		bindService(i, conn, BIND_AUTO_CREATE);
 	}
@@ -100,7 +100,9 @@ public class DTNMediatorService extends IntentService {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
 	 */
 	@Override
@@ -109,17 +111,21 @@ public class DTNMediatorService extends IntentService {
 		String action = intent.getAction();
 
 		// If intent is from BundleDaemon:handle_bundle_received
-		if (action.equals(Constants.ACTION_RECEIVE_DTN_BUNDLE)) {
-			android.os.Bundle data = intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
-	        // Receive DTN bundle from intent and process
-	        Bundle bundle = (Bundle)data.getSerializable(Constants.DTN_BUNDLE_KEY);
-	        
-	        // Process bundle
-	        processReturnReceipt(bundle);
-            
-		// If intent is from GeoCamDTNProxy
-		} else if (action.equals(Constants.ACTION_MEDIATE_DTN_BUNDLE)) {
-			File file = (File)intent.getSerializableExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
+		// if (action.equals(Constants.ACTION_RECEIVE_DTN_BUNDLE)) {
+		// android.os.Bundle data =
+		// intent.getBundleExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
+		// // Receive DTN bundle from intent and process
+		// Bundle bundle =
+		// (Bundle)data.getSerializable(Constants.DTN_BUNDLE_KEY);
+		//	        
+		// // Process bundle
+		// processReturnReceipt(bundle);
+		//            
+		// // If intent is from GeoCamDTNProxy
+		// } else
+		if (action.equals(Constants.ACTION_SEND_DTN_BUNDLE)) {
+			File file = (File) intent
+					.getSerializableExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD);
 			try {
 				serviceCondition.block();
 				createDTNBundleFromFile(file);
@@ -138,64 +144,85 @@ public class DTNMediatorService extends IntentService {
 
 	/**
 	 * Process received bundle
+	 * 
 	 * @param bundle
 	 */
-	private void processReturnReceipt(Bundle bundle) {
-		Log.i(TAG, "PROCESSING BUNDLE from " + bundle.source().uri());
-		// Only a return receipt if destined to this device
-		if (!bundle.dest().equals(BundleDaemon.getInstance().local_eid())) {
-			return;
-		}
-		
-		// Extract payload from DTN bundle
-		byte[] payload = new byte[bundle.payload().length()];
-		bundle.payload().read_data(0, bundle.payload().length(), payload);
-		
-		// For now, just notify user received return receipt bundle payload
-		DTNManager.getInstance().notify_user("GeoCam Return Receipt", "Payload: " + new String(payload));
-		Log.i(TAG, "GEOCAM RETURN RECEIPT from " + bundle.source().uri() + ": " + new String(payload));
-	}
-	
+	// private void processReturnReceipt(Bundle bundle) {
+	// Log.i(TAG, "PROCESSING BUNDLE from " + bundle.source().uri());
+	// // Only a return receipt if destined to this device
+	// if (!bundle.dest().equals(BundleDaemon.getInstance().local_eid())) {
+	// return;
+	// }
+	//		
+	// // Extract payload from DTN bundle
+	// byte[] payload = new byte[bundle.payload().length()];
+	// bundle.payload().read_data(0, bundle.payload().length(), payload);
+	//		
+	// // For now, just notify user received return receipt bundle payload
+	// DTNManager.getInstance().notify_user("GeoCam Return Receipt", "Payload: "
+	// + new String(payload));
+	// Log.i(TAG, "GEOCAM RETURN RECEIPT from " + bundle.source().uri() + ": " +
+	// new String(payload));
+	// }
+
 	/**
-	 * Create a DTN bundle from a file and send to DTN agent
+	 * Create a DTN bundle from a file and send to DTN agent Register for
+	 * receipts also
+	 * 
 	 * @param file
 	 */
-	private void createDTNBundleFromFile(File file) throws UnsupportedEncodingException, DTNOpenFailException, DTNAPIFailException {
+	private void createDTNBundleFromFile(File file)
+			throws UnsupportedEncodingException, DTNOpenFailException,
+			DTNAPIFailException {
 		// Setting DTNBundle Payload according to the values
-		DTNBundlePayload dtn_payload = new DTNBundlePayload(dtn_bundle_payload_location_t.DTN_PAYLOAD_FILE);
+		DTNBundlePayload dtn_payload = new DTNBundlePayload(
+				dtn_bundle_payload_location_t.DTN_PAYLOAD_FILE);
 		dtn_payload.set_file(file);
-		Log.d(TAG, "Creating a dtn bundle"); 
+		Log.d(TAG, "Creating a dtn bundle");
 
 		// Start the DTN Communication
 		DTNHandle dtn_handle = new DTNHandle();
-		dtn_api_status_report_code open_status = dtn_api_binder.dtn_open(dtn_handle);
-		if (open_status != dtn_api_status_report_code.DTN_SUCCESS) 
+		dtn_api_status_report_code open_status = dtn_api_binder
+				.dtn_open(dtn_handle);
+		if (open_status != dtn_api_status_report_code.DTN_SUCCESS)
 			throw new DTNOpenFailException();
 		try {
 			DTNBundleSpec spec = new DTNBundleSpec();
 			// Destination is static gateway
 			spec.set_dest(new DTNEndpointID(Constants.STATIC_GATEWAY_EID));
-			Log.d(TAG, "Setting destination to " + Constants.STATIC_GATEWAY_EID);
+			Log
+					.d(TAG, "Setting destination to "
+							+ Constants.STATIC_GATEWAY_EID);
 			// set the source EID from the bundle Daemon
-			spec.set_source(new DTNEndpointID(BundleDaemon.getInstance().local_eid().toString()));
+			spec.set_source(getLocalEid("geocam"));
 			spec.set_expiration(Constants.BUNDLE_EXPIRATION);
-			Log.d(TAG, "Set bundle expiration to " + Constants.BUNDLE_EXPIRATION);   
+			Log.d(TAG, "Set bundle expiration to "
+					+ Constants.BUNDLE_EXPIRATION);
 			spec.set_dopts(Constants.BUNDLE_DOPTS);
 			spec.set_priority(dtn_bundle_priority_t.COS_NORMAL);
-			
+
 			// Data structure to get result from the IBinder
 			DTNBundleID dtn_bundle_id = new DTNBundleID();
 
-			Log.d(TAG, "Sending bundle ...");   
+			Log.d(TAG, "Sending bundle ...");
 
-			dtn_api_status_report_code api_send_result =  dtn_api_binder.dtn_send(dtn_handle, 
-					spec, 
-					dtn_payload, 
-					dtn_bundle_id);
-			
-			// delete temporary file (it is not needed anymore since bytewalla has persistent bundle with file as payload)
+			dtn_api_status_report_code api_send_result = dtn_api_binder
+					.dtn_send(dtn_handle, spec, dtn_payload, dtn_bundle_id);
+
+			// delete temporary file (it is not needed anymore since bytewalla
+			// has persistent bundle with file as payload)
 			file.delete();
-			
+
+			// register for receipts
+			//String srcEid = BundleDaemon.getInstance().local_eid().toString();
+			String srcEid = getLocalEid("geocam").toString();
+			Intent registration = new Intent(
+					Constants.ACTION_REGISTER_WITH_RECEIVE_SERVICE);
+			android.os.Bundle destEidBundle = new android.os.Bundle();
+			destEidBundle.putString(Constants.DTN_DEST_EID_KEY, srcEid);
+			registration.putExtra(Constants.DTN_DEST_EID_KEY, destEidBundle);
+			startService(registration);
+
 			// If the API fail to execute throw the exception so user interface
 			// can catch and notify users
 			if (api_send_result != dtn_api_status_report_code.DTN_SUCCESS) {
@@ -204,5 +231,14 @@ public class DTNMediatorService extends IntentService {
 		} finally {
 			dtn_api_binder.dtn_close(dtn_handle);
 		}
+	}
+	
+	protected DTNEndpointID getLocalEid(String service) {
+
+		//dtn_build_local_eid
+		String device_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+		String deviceUri = "dtn://android" + device_id + ".dtn/" + service;
+		DTNEndpointID localEid = new DTNEndpointID(deviceUri);
+		return localEid;
 	}
 }

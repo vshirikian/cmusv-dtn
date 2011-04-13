@@ -29,9 +29,6 @@ import java.util.ListIterator;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import edu.cmu.sv.geocamdtn.lib.Constants;
-
-import android.content.Intent;
 import android.util.Log;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNManager;
 import se.kth.ssvl.tslab.bytewalla.androiddtn.DTNService;
@@ -720,6 +717,7 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 		case EVENTSRC_PEER:
 			stats_.received_bundles_++;
 			DTNManager.getInstance().notify_user("DTN Bundle Received", "From " + bundle.source().toString());
+			
 			break;
 
 		case EVENTSRC_APP:
@@ -879,25 +877,6 @@ public class BundleDaemon extends BundleEventHandler implements Runnable {
 				event.set_daemon_only(true);
 				return;
 			}
-			
-			
-			/*
-			 * Intent generation used to trigger receipt event
-			 */
-//            if (bundle != null) {
-//            	Intent geoCamDTNIntent = new Intent(Constants.ACTION_RECEIVE_DTN_BUNDLE);
-//
-//            	android.os.Bundle data = new android.os.Bundle();
-//            	data.putSerializable(Constants.DTN_BUNDLE_KEY, bundle);
-//            	geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, bundle);
-//            	
-//            	DTNService.context().startService(geoCamDTNIntent);
-//            	
-//            	// Debug code
-//            	byte[] payload = new byte[bundle.payload().length()];
-//                bundle.payload().read_data(0, bundle.payload().length(), payload);
-//            	Log.e(TAG, "!@#$%^&*() ---- RETURN RECEIPT INTENT PAYLOAD: " + new String(payload));
-//            }
 		}
 
 		/*

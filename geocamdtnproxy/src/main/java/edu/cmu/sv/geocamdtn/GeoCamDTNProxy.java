@@ -186,7 +186,7 @@ public class GeoCamDTNProxy extends HttpServlet {
      * @param file
      */
     private void sendToDTN(File file) {    	
-		Intent geoCamDTNIntent = new Intent(Constants.ACTION_MEDIATE_DTN_BUNDLE);
+		Intent geoCamDTNIntent = new Intent(Constants.ACTION_SEND_DTN_BUNDLE);
 		geoCamDTNIntent.putExtra(Constants.IKEY_DTN_BUNDLE_PAYLOAD, file);
 		androidContext.startService(geoCamDTNIntent);	
     }

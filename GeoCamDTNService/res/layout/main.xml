@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView  
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content" 
-    android:text="@string/hello"
-    />
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:orientation="vertical" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<TextView android:id="@+id/DestEIDTextView"
+			android:layout_width="wrap_content" android:layout_height="wrap_content"
+			android:textSize="15sp" android:layout_marginTop="8dp"
+			android:text="Geocam Endpoint ID:" />
+		<EditText android:id="@+id/DestEIDEditText"
+			android:layout_width="fill_parent" android:layout_marginBottom="8dp"
+			android:layout_height="wrap_content" android:text="dtn://droid.dtn/geocam"></EditText>
+
+		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			android:orientation="horizontal" android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/RegisterEidButton"
+				android:text="Register Eid" />
+
+			<Button android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:id="@+id/UnregisterEidButton"
+				android:text="Unregister Eid" android:layout_marginLeft="10dp" />
+		</LinearLayout>
+
+		<TextView android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:text=""
+			android:id="@+id/ResultTextView" />
+
+	</LinearLayout>
+</ScrollView>
